@@ -9,9 +9,9 @@ class Application {
 
     public start(port: string | number): void {
         this.app.use(express.json());
-        this.app.use(cors());
+        this.app.use(cors({ origin: '*' }));
         this.app.use(function (req, res, next) {
-            res.header("Access-Control-Allow-Origin", "http://localhost:4200");
+            res.header("Access-Control-Allow-Origin", "*");
             res.header("Access-Control-Allow-Methods", "GET, HEAD, OPTIONS, POST, PUT, DELETE");
             res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
             next();
