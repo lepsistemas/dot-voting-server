@@ -1,10 +1,5 @@
-import express from 'express';
+import Application from './Application';
 
-const PORT = process.env.PORT || 5000;
+const app: Application = new Application();
 
-const app = express();
-app.get('/', (req, res) => {
-    res.send('Hello World!')
-});
-
-app.listen(PORT);
+app.start(process.env.PORT || 5000);

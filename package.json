@@ -10,7 +10,7 @@
     "postinstall": "npm run build-ts",
     "start": "yarn serve",
     "serve": "node dist/server.js",
-    "dev": "yarn build-ts && yarn start",
+    "dev": "yarn build-ts && yarn watch-node",
     "watch-node": "nodemon dist/server.js",
     "watch-ts": "tsc -w"
   },
