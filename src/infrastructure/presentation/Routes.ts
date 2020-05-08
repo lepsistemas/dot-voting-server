@@ -1,4 +1,4 @@
-import { Router, request } from 'express';
+import { Router } from 'express';
 
 import RoomController from '../presentation/RoomController';
 import RoomRequest from './dto/RoomRequest';
@@ -28,13 +28,13 @@ class Routes {
     }
     
     public create(): Router {
-        
-        this.routes.get('/rooms', (req, res) => {
+
+        this.routes.get('/api/v1/rooms', (req, res) => {
             const response: any = this.roomController.all();
             res.send(response);
         });
 
-        this.routes.post('/rooms', (req, res, next) => {
+        this.routes.post('/api/v1/rooms', (req, res, next) => {
             const response: any = this.roomController.create(new RoomRequest(req.body));
             if (response.error) {
                 res.status(response.error.status);
