@@ -9,8 +9,8 @@ class Application {
 
     public start(port: string | number): void {
         this.app.use(express.json());
-        this.app.use(this.routes.create());
         this.app.use(cors({ origin: 'http://localhost:4200' }));
+        this.app.use(this.routes.create());
         this.app.listen(port);
     }
 
