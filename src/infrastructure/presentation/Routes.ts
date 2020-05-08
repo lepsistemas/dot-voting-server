@@ -29,22 +29,32 @@ class Routes {
     
     public create(): Router {
 
-        this.routes.get('/api/v1/rooms', (req, res) => {
-            const response: any = this.roomController.all();
-            res.send(response);
+        this.routes.get('/api/v1/rooms', (request, response) => {
+            const result: any = this.roomController.all();
+            this.handleResponse(response, result);
         });
 
-        this.routes.post('/api/v1/rooms', (req, res, next) => {
-            const response: any = this.roomController.create(new RoomRequest(req.body));
-            if (response.error) {
-                res.status(response.error.status);
-                res.send(response);
-            } else {
-                res.send(response);
-            }
+        this.routes.get('/api/v1/rooms/:id', (request, response) => {
+            const id: number = parseInt(request.params.id);
+            const result: any = this.roomController.id(id);
+            this.handleResponse(response, result);
+        });
+
+        this.routes.post('/api/v1/rooms', (request, response) => {
+            const result: any = this.roomController.create(new RoomRequest(request.body));
+            this.handleResponse(response, result);
         });
 
         return this.routes;
+    }
+
+    private handleResponse(response: any, dto: any): void {
+        if (dto.error) {
+            response.status(dto.error.status);
+            response.send(dto);
+        } else {
+            response.send(dto);
+        }
     }
 
 }

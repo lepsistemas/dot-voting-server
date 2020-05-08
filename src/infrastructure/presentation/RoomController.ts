@@ -25,12 +25,25 @@ class RoomController {
         return rooms.map(room => RoomToResponse.convert(room));
     }
 
+    public id(id: number): RoomResponse | ErrorResponse {
+        try {
+            const room: Room = this.fetchRoom.by(id);
+            return RoomToResponse.convert(room);
+        } catch(e) {
+            return {
+                error: {
+                    status: 400,
+                    message: e.message
+                }
+            };
+        }
+    }
+
     public create(request: RoomRequest): RoomResponse | ErrorResponse {
         const data: RoomData = RequestToRoomData.convert(request);
         try {
             const room: Room = this.createRoom.with(data);
-            const response: RoomResponse = RoomToResponse.convert(room);
-            return response;
+            return RoomToResponse.convert(room);
         } catch(e) {
             return {
                 error: {

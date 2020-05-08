@@ -13,6 +13,14 @@ class FetchRoom {
         return this.allRooms.get();
     }
 
+    public by(id: number): Room {
+        try {
+            return this.allRooms.by(id);
+        } catch(e) {
+            throw e;
+        }
+    }
+
 }
 
 export default FetchRoom;
