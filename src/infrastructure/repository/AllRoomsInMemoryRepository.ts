@@ -17,8 +17,16 @@ class AllRoomsInMemoryRepository implements AllRooms {
         return this.rooms;
     }
 
-    by(id: number): Room {
+    byId(id: number): Room {
         const room: Room = this.rooms.find(room => room.id === id);
+        if (!room) {
+            throw new RoomNotFoundException();
+        }
+        return room;
+    }
+
+    byOwnerAndName(owner: string, name: string): Room {
+        const room: Room = this.rooms.find(room => room.owner.username === owner && room.name === name);
         if (!room) {
             throw new RoomNotFoundException();
         }

@@ -27,7 +27,21 @@ class RoomController {
 
     public id(id: number): RoomResponse | ErrorResponse {
         try {
-            const room: Room = this.fetchRoom.by(id);
+            const room: Room = this.fetchRoom.byId(id);
+            return RoomToResponse.convert(room);
+        } catch(e) {
+            return {
+                error: {
+                    status: 400,
+                    message: e.message
+                }
+            };
+        }
+    }
+
+    byOwnerAndName(owner: string, name: string): RoomResponse | ErrorResponse {
+        try {
+            const room: Room = this.fetchRoom.byOwnerAndName(owner, name);
             return RoomToResponse.convert(room);
         } catch(e) {
             return {

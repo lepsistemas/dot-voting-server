@@ -30,7 +30,12 @@ class Routes {
     public create(): Router {
 
         this.routes.get('/api/v1/rooms', (request, response) => {
-            const result: any = this.roomController.all();
+            let result: any = null;
+            if (request.query.owner && request.query.name) {
+                result = this.roomController.byOwnerAndName(String(request.query.owner), String(request.query.name));
+            } else {
+                result = this.roomController.all();
+            }
             this.handleResponse(response, result);
         });
 

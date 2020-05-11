@@ -4,7 +4,9 @@ interface AllRooms {
 
     get(): Room[];
 
-    by(id: number): Room;
+    byId(id: number): Room;
+
+    byOwnerAndName(owner: string, name: string): Room;
     
     add(room: Room): Room;
 }

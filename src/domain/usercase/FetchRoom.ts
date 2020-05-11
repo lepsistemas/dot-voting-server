@@ -13,9 +13,17 @@ class FetchRoom {
         return this.allRooms.get();
     }
 
-    public by(id: number): Room {
+    public byId(id: number): Room {
         try {
-            return this.allRooms.by(id);
+            return this.allRooms.byId(id);
+        } catch(e) {
+            throw e;
+        }
+    }
+
+    public byOwnerAndName(owner: string, name: string): Room {
+        try {
+            return this.allRooms.byOwnerAndName(owner, name);
         } catch(e) {
             throw e;
         }
