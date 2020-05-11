@@ -8,7 +8,8 @@ class Application {
     private routes: Routes = new Routes();
 
     public start(port: string | number): void {
-        this.app.use(cors({ origin: 'http://localhost:4200'}));
+        const origin = process.env.CORS_ORIGIN;
+        this.app.use(cors({ origin: origin}));
         this.app.use(express.json());
         this.app.use(this.routes.create());
         this.app.listen(port);
