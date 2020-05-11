@@ -9,6 +9,8 @@ interface AllRooms {
     byOwnerAndName(owner: string, name: string): Room;
     
     add(room: Room): Room;
+
+    put(id: number, room: Room): void;
 }
 
 export default AllRooms;

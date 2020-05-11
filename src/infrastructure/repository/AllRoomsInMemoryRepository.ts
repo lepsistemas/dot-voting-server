@@ -53,6 +53,15 @@ class AllRoomsInMemoryRepository implements AllRooms {
         return room;
     }
 
+    put(id: number, room: Room): void {
+        this.rooms.map(r => {
+            if (r.id === id) {
+                return room;
+            }
+            return r;
+        })
+    }
+
 }
 
 export default AllRoomsInMemoryRepository;

@@ -6,6 +6,7 @@ interface RoomResponse {
     name: string;
     numberOfGuests: number;
     owner: UserResponse;
+    guests?: UserResponse[]
 }
 
 export default RoomResponse;
