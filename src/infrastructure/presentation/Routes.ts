@@ -57,8 +57,9 @@ class Routes {
     
     public create(): Router {
 
-        this.routes.get('/api/v1/users', (request, response) => {
-            const result: any = this.userController.all();
+        this.routes.get('/api/v1/users/:id', (request, response) => {
+            const id: number = parseInt(request.params.id);
+            const result: any = this.userController.id(id);
             this.handleResponse(response, result);
         });
 

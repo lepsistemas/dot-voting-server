@@ -7,6 +7,8 @@ interface AllUsers {
     withUsername(username: string): User;
     
     all(): User[];
+
+    byId(id: number): User;
 }
 
 export default AllUsers;
