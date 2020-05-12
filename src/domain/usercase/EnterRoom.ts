@@ -1,16 +1,15 @@
 import AllRooms from "./collection/AllRooms";
 
 import Room from "../model/Room";
+import RoomEntrance from "../model/RoomEntrance";
 import User from "../model/User";
 
 import RoomEntranceData from "./RoomEntranceData";
 import UserData from "./UserData";
 
-import FetchUser from "./FetchUser";
 import CreateUser from "./CreateUser";
 
 import RoomNotFoundException from "./exception/RoomNotFoundException";
-import UserAlreadyInRoomException from "./exception/UserAlreadyInRoomException";
 
 class EnterRoom {
 
@@ -22,7 +21,7 @@ class EnterRoom {
         this.allRooms = allRooms;
     }
 
-    with(data: RoomEntranceData): void {
+    with(data: RoomEntranceData): RoomEntrance {
         const room: Room = this.allRooms.byNameAndKey(data.name, data.key);
         if (!room) {
             throw new RoomNotFoundException();
@@ -45,6 +44,13 @@ class EnterRoom {
         }
         room.guests.push(guest);
         this.allRooms.put(room.id, room);
+
+        const entrance: RoomEntrance = {
+            id: room.id,
+            guest: guest
+        }
+
+        return entrance;
     }
 
 }
