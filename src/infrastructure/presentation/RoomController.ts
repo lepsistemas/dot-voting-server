@@ -7,7 +7,7 @@ import RoomToResponse from "../convert/RoomToResponse";
 
 import FetchRoom from "../../domain/usercase/FetchRoom";
 import CreateRoom from "../../domain/usercase/CreateRoom";
-import RoomData from "../../domain/model/RoomData";
+import RoomData from "../../domain/usercase/RoomData";
 import Room from "../../domain/model/Room";
 
 class RoomController {
@@ -28,20 +28,6 @@ class RoomController {
     public id(id: number): RoomResponse | ErrorResponse {
         try {
             const room: Room = this.fetchRoom.byId(id);
-            return RoomToResponse.convert(room);
-        } catch(e) {
-            return {
-                error: {
-                    status: 400,
-                    message: e.message
-                }
-            };
-        }
-    }
-
-    byOwnerAndName(owner: string, name: string): RoomResponse | ErrorResponse {
-        try {
-            const room: Room = this.fetchRoom.byOwnerAndName(owner, name);
             return RoomToResponse.convert(room);
         } catch(e) {
             return {

@@ -1,13 +1,12 @@
 import RoomRequest from "../presentation/dto/RoomRequest";
-import RoomData from "../../domain/model/RoomData";
+import RoomData from "../../domain/usercase/RoomData";
 
 class RequestToRoomData {
 
     static convert(request: RoomRequest): RoomData {
         const converted: RoomData = {
             name: request.name,
-            username: request.username,
-            numberOfGuests: request.numberOfGuests
+            username: request.username
         }
 
         return converted;

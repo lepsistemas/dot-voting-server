@@ -5,8 +5,10 @@ class UserToResponse {
 
     static convert(user: User): UserResponse {
         const converted: UserResponse= {
+            id: user.id,
             username: user.username,
-            admin: user.admin
+            admin: user.admin,
+            token: user.token
         }
         return converted;
     }

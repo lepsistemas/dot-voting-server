@@ -3,8 +3,8 @@ import UserResponse from "./UserResponse";
 interface RoomResponse {
 
     id: number;
+    key: string;
     name: string;
-    numberOfGuests: number;
     owner: UserResponse;
     locked: boolean;
     guests?: UserResponse[]

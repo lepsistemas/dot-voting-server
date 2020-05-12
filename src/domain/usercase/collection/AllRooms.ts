@@ -2,11 +2,11 @@ import Room from "../../../domain/model/Room";
 
 interface AllRooms {
 
-    get(): Room[];
+    all(): Room[];
 
     byId(id: number): Room;
 
-    byOwnerAndName(owner: string, name: string): Room;
+    byNameAndKey(name: string, key: string): Room;
     
     add(room: Room): Room;
 

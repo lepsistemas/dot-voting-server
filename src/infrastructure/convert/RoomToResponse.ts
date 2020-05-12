@@ -12,8 +12,8 @@ class RoomToResponse {
         }
         const converted: RoomResponse = {
             id: room.id,
+            key: room.key,
             name: room.name,
-            numberOfGuests: room.numberOfGuests,
             owner: UserToResponse.convert(room.owner),
             locked: room.locked,
             guests: guests

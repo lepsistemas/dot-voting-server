@@ -1,7 +1,7 @@
 interface RoomEntranceData {
 
-    owner: string;
     name: string;
+    key: string;
     username: string;
 
 }

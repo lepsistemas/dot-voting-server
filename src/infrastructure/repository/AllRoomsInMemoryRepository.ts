@@ -1,9 +1,5 @@
 import AllRooms from '../../domain/usercase/collection/AllRooms';
 import Room from '../../domain/model/Room';
-import User from '../../domain/model/User';
-import UserAlreadyInRoomException from '../../domain/usercase/exception/UserAlreadyInRoomException';
-import RoomAlreadyExistsException from '../../domain/usercase/exception/RoomAlreadyExistsException';
-import RoomNotFoundException from '../../domain/usercase/exception/RoomNotFoundException';
 
 class AllRoomsInMemoryRepository implements AllRooms {
 
@@ -13,39 +9,19 @@ class AllRoomsInMemoryRepository implements AllRooms {
         this.rooms = [];
     }
 
-    get(): Room[] {
+    all(): Room[] {
         return this.rooms;
     }
 
     byId(id: number): Room {
-        const room: Room = this.rooms.find(room => room.id === id);
-        if (!room) {
-            throw new RoomNotFoundException();
-        }
-        return room;
+        return this.rooms.find(room => room.id === id);
     }
 
-    byOwnerAndName(owner: string, name: string): Room {
-        const room: Room = this.rooms.find(room => room.owner.username === owner && room.name === name);
-        if (!room) {
-            throw new RoomNotFoundException();
-        }
-        return room;
+    byNameAndKey(name: string, key: string): Room {
+        return this.rooms.find(room => room.name === name && room.key === key);
     }
     
     add(room: Room): Room {
-        const owner: User = room.owner;
-        
-        const ownersRoom: Room = this.rooms.find(r => r.owner.username === owner.username);
-        if (ownersRoom) {
-            throw new UserAlreadyInRoomException(owner.username);
-        }
-
-        const otherRoom: Room = this.rooms.find(r => r.name === room.name);
-        if (otherRoom) {
-            throw new RoomAlreadyExistsException(room.name);
-        }
-
         const lastId: number = this.rooms.reduce((previous, current) => (previous > current.id) ? previous : current.id, 0);
         room.id = lastId + 1;
         this.rooms.push(room);

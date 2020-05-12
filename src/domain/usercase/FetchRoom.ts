@@ -1,5 +1,6 @@
 import Room from '../model/Room';
 import AllRooms from './collection/AllRooms';
+import RoomNotFoundException from './exception/RoomNotFoundException';
 
 class FetchRoom {
 
@@ -10,23 +11,23 @@ class FetchRoom {
     }
     
     public all(): Room[] {
-        return this.allRooms.get();
+        return this.allRooms.all();
     }
 
     public byId(id: number): Room {
-        try {
-            return this.allRooms.byId(id);
-        } catch(e) {
-            throw e;
+        const room: Room = this.allRooms.byId(id);
+        if (!room) {
+            throw new RoomNotFoundException();
         }
+        return room;
     }
 
-    public byOwnerAndName(owner: string, name: string): Room {
-        try {
-            return this.allRooms.byOwnerAndName(owner, name);
-        } catch(e) {
-            throw e;
+    public byNameAndKey(name: string, key: string): Room {
+        const room: Room = this.allRooms.byNameAndKey(name, key);
+        if (!room) {
+            throw new RoomNotFoundException();
         }
+        return room;
     }
 
 }

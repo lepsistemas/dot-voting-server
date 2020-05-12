@@ -1,26 +1,56 @@
 import Room from "../model/Room";
-import RoomData from "../model/RoomData";
+import RoomData from "./RoomData";
+import User from "../model/User";
+
 import AllRooms from "./collection/AllRooms";
+import CreateUser from "./CreateUser";
+import UserData from "./UserData";
+
+import UserAlreadyInRoomException from "./exception/UserAlreadyInRoomException";
+import RoomAlreadyExistsException from "./exception/RoomAlreadyExistsException";
+import GenerateKey from "./GenerateKey";
 
 class CreateRoom {
 
+    private createUser: CreateUser;
     private allRooms: AllRooms;
 
-    constructor(allRooms: AllRooms) {
+    constructor(createUser: CreateUser, allRooms: AllRooms) {
+        this.createUser = createUser;
         this.allRooms = allRooms;
     }
 
     public with(data: RoomData): Room {
-        const room: Room = {
-            name: data.name,
-            numberOfGuests: data.numberOfGuests,
-            owner: {
+        let owner: User = null;
+        try {
+            const user: UserData = {
                 username: data.username,
                 admin: true
-            },
-            locked: true
+            }
+            owner = this.createUser.with(user);
+        } catch(e) {
+            throw e;
         }
 
+        const rooms: Room[] = this.allRooms.all();
+        const ownersRoom: Room = rooms.find(r => r.owner.username === owner.username);
+        if (ownersRoom) {
+            throw new UserAlreadyInRoomException(owner.username);
+        }
+
+        const otherRoom: Room = rooms.find(r => r.name === data.name);
+        if (otherRoom) {
+            throw new RoomAlreadyExistsException(otherRoom.name);
+        }
+        
+        const key: string = GenerateKey.withSize(8);
+
+        const room: Room = {
+            name: data.name,
+            key: key,
+            owner: owner,
+            locked: true
+        }
         try {
             return this.allRooms.add(room);
         } catch(e) {

@@ -8,47 +8,62 @@ import RoomEntranceRequest from './dto/RoomEntranceRequest';
 
 import FetchRoom from '../../domain/usercase/FetchRoom';
 import CreateRoom from '../../domain/usercase/CreateRoom';
-import AllRooms from '../../domain/usercase/collection/AllRooms';
-
-import AllRoomsInMemoryRepository from '../repository/AllRoomsInMemoryRepository';
 import EnterRoom from '../../domain/usercase/EnterRoom';
+
+import AllRooms from '../../domain/usercase/collection/AllRooms';
+import AllRoomsInMemoryRepository from '../repository/AllRoomsInMemoryRepository';
+
+import AllUsers from '../../domain/usercase/collection/AllUsers';
+import AllUsersInMemoryRepository from '../repository/AllUsersInMemoryRepository';
+import UserController from './UserController';
+import FetchUser from '../../domain/usercase/FetchUser';
+import CreateUser from '../../domain/usercase/CreateUser';
 
 class Routes {
 
     private routes: Router;
 
+    private userController: UserController;
     private roomController: RoomController;
     private roomEntranceController: RoomEntranceController;
 
+    private allUsers: AllUsers;
     private allRooms: AllRooms;
+
+    private createUser: CreateUser;
+    private fetchUser: FetchUser;
 
     private fetchRoom: FetchRoom;
     private createRoom: CreateRoom;
-
     private enterRoom: EnterRoom;
 
     constructor() {
         this.routes = Router();
         
+        this.allUsers = new AllUsersInMemoryRepository();
         this.allRooms = new AllRoomsInMemoryRepository();
 
-        this.fetchRoom = new FetchRoom(this.allRooms);
-        this.createRoom = new CreateRoom(this.allRooms);
-        this.enterRoom = new EnterRoom(this.allRooms);
+        this.fetchUser = new FetchUser(this.allUsers);
+        this.createUser = new CreateUser(this.allUsers);
 
+        this.fetchRoom = new FetchRoom(this.allRooms);
+        this.createRoom = new CreateRoom(this.createUser, this.allRooms);
+        this.enterRoom = new EnterRoom(this.createUser, this.allRooms);
+
+        this.userController = new UserController(this.fetchUser);
         this.roomController = new RoomController(this.fetchRoom, this.createRoom);
         this.roomEntranceController = new RoomEntranceController(this.enterRoom);
     }
     
     public create(): Router {
 
+        this.routes.get('/api/v1/users', (request, response) => {
+            const result: any = this.userController.all();
+            this.handleResponse(response, result);
+        });
+
         this.routes.get('/api/v1/rooms', (request, response) => {
-            let result: any = null;
-            if (request.query.owner && request.query.name) {
-                result = this.roomController.byOwnerAndName(String(request.query.owner), String(request.query.name));
-            } else {
-                result = this.roomController.all();
-            }
+            let result: any = this.roomController.all();
             this.handleResponse(response, result);
         });
 
@@ -72,7 +87,7 @@ class Routes {
     }
 
     private handleResponse(response: any, dto: any): void {
-        if (dto.error) {
+        if (dto && dto.error) {
             response.status(dto.error.status);
             response.send(dto);
         } else {

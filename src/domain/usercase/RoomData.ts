@@ -2,7 +2,6 @@ interface RoomData {
 
     name: string;
     username: string;
-    numberOfGuests: number;
 
 }
 

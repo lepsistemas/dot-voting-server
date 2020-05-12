@@ -1,12 +1,12 @@
 class RoomEntranceRequest {
 
-    owner: string;
     name: string;
+    key: string;
     username: string;
 
     constructor(body: any) {
-        this.owner = body.owner;
         this.name = body.name;
+        this.key = body.key;
         this.username = body.username;
     }
 
