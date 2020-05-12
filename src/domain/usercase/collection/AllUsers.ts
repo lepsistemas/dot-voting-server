@@ -9,6 +9,8 @@ interface AllUsers {
     all(): User[];
 
     byId(id: number): User;
+    
+    byUsername(username: string): User;
 }
 
 export default AllUsers;

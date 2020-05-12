@@ -8,15 +8,19 @@ import RoomEntranceData from "./RoomEntranceData";
 import UserData from "./UserData";
 
 import CreateUser from "./CreateUser";
+import FetchUser from "./FetchUser";
 
 import RoomNotFoundException from "./exception/RoomNotFoundException";
+import AllUsers from "./collection/AllUsers";
 
 class EnterRoom {
 
     private createUser: CreateUser;
+    private allUsers: AllUsers;
     private allRooms: AllRooms;
 
-    constructor(createUser: CreateUser, allRooms: AllRooms) {
+    constructor(allUsers: AllUsers, createUser: CreateUser, allRooms: AllRooms) {
+        this.allUsers = allUsers;
         this.createUser = createUser;
         this.allRooms = allRooms;
     }
@@ -27,22 +31,24 @@ class EnterRoom {
             throw new RoomNotFoundException();
         }
 
-        const userData: UserData = {
-            username: data.username,
-            admin: false
-        }
-        
-        let guest: User = null;
-        try {
-            guest = this.createUser.with(userData);
-        } catch(e) {
-            throw e;
-        }
-
         if (!room.guests) {
             room.guests = [];
         }
-        room.guests.push(guest);
+
+        let guest: User = this.allUsers.byUsername(data.username);
+        if (!guest) {
+            const userData: UserData = {
+                username: data.username,
+                admin: false
+            }
+            
+            try {
+                guest = this.createUser.with(userData);
+            } catch(e) {
+                throw e;
+            }
+            room.guests.push(guest);
+        }
         this.allRooms.put(room.id, room);
 
         const entrance: RoomEntrance = {

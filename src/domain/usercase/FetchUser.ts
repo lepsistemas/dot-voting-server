@@ -22,6 +22,14 @@ class FetchUser {
         return user;
     }
 
+    byUsername(username: string): User {
+        const user: User = this.allUsers.byUsername(username);
+        if (!user) {
+            throw new UserNotFoundException();
+        }
+        return user;
+    }
+
 }
 
 export default FetchUser;

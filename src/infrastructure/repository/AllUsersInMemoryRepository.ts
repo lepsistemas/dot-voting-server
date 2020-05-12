@@ -29,6 +29,10 @@ class AllUsersInMemoryRepository implements AllUsers {
         return this.users.find(u => u.id === id);
     }
 
+    byUsername(username: string): User {
+        return this.users.find(u => u.username === username);
+    }
+
 }
 
 export default AllUsersInMemoryRepository;
