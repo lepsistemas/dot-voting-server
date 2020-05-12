@@ -6,6 +6,7 @@ interface RoomResponse {
     name: string;
     numberOfGuests: number;
     owner: UserResponse;
+    locked: boolean;
     guests?: UserResponse[]
 }
 

@@ -15,6 +15,7 @@ class RoomToResponse {
             name: room.name,
             numberOfGuests: room.numberOfGuests,
             owner: UserToResponse.convert(room.owner),
+            locked: room.locked,
             guests: guests
         }
 

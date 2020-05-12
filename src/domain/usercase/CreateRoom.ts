@@ -17,7 +17,8 @@ class CreateRoom {
             owner: {
                 username: data.username,
                 admin: true
-            }
+            },
+            locked: true
         }
 
         try {

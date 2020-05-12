@@ -6,6 +6,7 @@ interface Room {
     name: string;
     numberOfGuests: number;
     owner: User;
+    locked: boolean;
     guests?: User[];
 
 }
