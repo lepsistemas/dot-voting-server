@@ -78,7 +78,7 @@ class Routes {
             this.handleResponse(response, result);
         });
 
-        this.routes.post('/api/v1/rooms-entrance/:id', (request, response) => {
+        this.routes.post('/api/v1/rooms-entrance', (request, response) => {
             const result: any = this.roomEntranceController.enter(new RoomEntranceRequest(request.body));
             this.handleResponse(response, result);
         })
