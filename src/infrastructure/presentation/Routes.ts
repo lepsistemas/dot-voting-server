@@ -2,23 +2,27 @@ import { Router } from 'express';
 
 import RoomController from '../presentation/RoomController';
 import RoomRequest from './dto/RoomRequest';
+import RoomLockerRequest from './dto/RoomLockerRequest';
 
 import RoomEntranceController from './RoomEntranceController';
 import RoomEntranceRequest from './dto/RoomEntranceRequest';
 
+import UserController from './UserController';
+
 import FetchRoom from '../../domain/usercase/FetchRoom';
 import CreateRoom from '../../domain/usercase/CreateRoom';
 import EnterRoom from '../../domain/usercase/EnterRoom';
+import DeleteRoom from '../../domain/usercase/DeleteRoom';
+import LockerRoom from '../../domain/usercase/LockerRoom';
+
+import FetchUser from '../../domain/usercase/FetchUser';
+import CreateUser from '../../domain/usercase/CreateUser';
 
 import AllRooms from '../../domain/usercase/collection/AllRooms';
 import AllRoomsInMemoryRepository from '../repository/AllRoomsInMemoryRepository';
 
 import AllUsers from '../../domain/usercase/collection/AllUsers';
 import AllUsersInMemoryRepository from '../repository/AllUsersInMemoryRepository';
-import UserController from './UserController';
-import FetchUser from '../../domain/usercase/FetchUser';
-import CreateUser from '../../domain/usercase/CreateUser';
-import DeleteRoom from '../../domain/usercase/DeleteRoom';
 
 class Routes {
 
@@ -38,6 +42,7 @@ class Routes {
     private createRoom: CreateRoom;
     private enterRoom: EnterRoom;
     private deleteRoom: DeleteRoom;
+    private lockerRoom: LockerRoom;
 
     constructor() {
         this.routes = Router();
@@ -52,9 +57,10 @@ class Routes {
         this.createRoom = new CreateRoom(this.createUser, this.allRooms);
         this.enterRoom = new EnterRoom(this.createUser, this.allUsers, this.allRooms);
         this.deleteRoom = new DeleteRoom(this.allRooms, this.allUsers);
+        this.lockerRoom = new LockerRoom(this.allRooms);
 
         this.userController = new UserController(this.fetchUser);
-        this.roomController = new RoomController(this.fetchRoom, this.createRoom, this.deleteRoom);
+        this.roomController = new RoomController(this.fetchRoom, this.createRoom, this.deleteRoom, this.lockerRoom);
         this.roomEntranceController = new RoomEntranceController(this.enterRoom);
     }
     
@@ -91,6 +97,13 @@ class Routes {
             const id: number = parseInt(request.params.id);
             this.roomController.delete(id);
             this.handleResponse(response, null);
+        });
+
+        this.routes.post('/api/v1/rooms/:id/locker', (request, response) => {
+            let roomLockerRequest: RoomLockerRequest = new RoomLockerRequest(request.body);
+            roomLockerRequest.id = parseInt(request.params.id);
+            const result: any = this.roomController.locker(roomLockerRequest);
+            this.handleResponse(response, result);
         });
 
         return this.routes;
