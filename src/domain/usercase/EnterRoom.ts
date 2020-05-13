@@ -8,10 +8,11 @@ import RoomEntranceData from "./RoomEntranceData";
 import UserData from "./UserData";
 
 import CreateUser from "./CreateUser";
-import FetchUser from "./FetchUser";
+
+import AllUsers from "./collection/AllUsers";
 
 import RoomNotFoundException from "./exception/RoomNotFoundException";
-import AllUsers from "./collection/AllUsers";
+import RoomIsLockedException from "./exception/RoomIsLockedException";
 
 class EnterRoom {
 
@@ -19,7 +20,7 @@ class EnterRoom {
     private allUsers: AllUsers;
     private allRooms: AllRooms;
 
-    constructor(allUsers: AllUsers, createUser: CreateUser, allRooms: AllRooms) {
+    constructor(createUser: CreateUser, allUsers: AllUsers, allRooms: AllRooms) {
         this.allUsers = allUsers;
         this.createUser = createUser;
         this.allRooms = allRooms;
@@ -29,6 +30,10 @@ class EnterRoom {
         const room: Room = this.allRooms.byNameAndKey(data.name, data.key);
         if (!room) {
             throw new RoomNotFoundException();
+        }
+
+        if (room.locked) {
+            throw new RoomIsLockedException(room.owner.username);
         }
 
         if (!room.guests) {

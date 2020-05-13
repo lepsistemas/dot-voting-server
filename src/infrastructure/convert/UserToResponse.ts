@@ -7,8 +7,7 @@ class UserToResponse {
         const converted: UserResponse= {
             id: user.id,
             username: user.username,
-            admin: user.admin,
-            token: user.token
+            admin: user.admin
         }
         return converted;
     }

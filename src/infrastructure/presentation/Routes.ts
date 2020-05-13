@@ -48,7 +48,7 @@ class Routes {
 
         this.fetchRoom = new FetchRoom(this.allRooms);
         this.createRoom = new CreateRoom(this.createUser, this.allRooms);
-        this.enterRoom = new EnterRoom(this.allUsers, this.createUser, this.allRooms);
+        this.enterRoom = new EnterRoom(this.createUser, this.allUsers, this.allRooms);
 
         this.userController = new UserController(this.fetchUser);
         this.roomController = new RoomController(this.fetchRoom, this.createRoom);
