@@ -32,7 +32,7 @@ class EnterRoom {
             throw new RoomNotFoundException();
         }
 
-        if (room.locked) {
+        if (room.owner.username !== data.username && room.locked) {
             throw new RoomIsLockedException(room.owner.username);
         }
 

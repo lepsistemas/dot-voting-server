@@ -18,8 +18,7 @@ class CreateUser {
         }
 
         const user: User = {
-            username: data.username,
-            admin: data.admin
+            username: data.username
         }
 
         return this.allUsers.add(user);

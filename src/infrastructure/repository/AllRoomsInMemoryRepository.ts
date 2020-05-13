@@ -38,6 +38,10 @@ class AllRoomsInMemoryRepository implements AllRooms {
         })
     }
 
+    remove(id: number): void {
+        this.rooms = this.rooms.filter(r => r.id !== id);
+    }
+
 }
 
 export default AllRoomsInMemoryRepository;

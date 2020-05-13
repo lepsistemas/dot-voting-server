@@ -11,6 +11,8 @@ interface AllRooms {
     add(room: Room): Room;
 
     put(id: number, room: Room): void;
+
+    remove(id: number): void;
 }
 
 export default AllRooms;

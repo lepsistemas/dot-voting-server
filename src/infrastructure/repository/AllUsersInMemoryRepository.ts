@@ -33,6 +33,10 @@ class AllUsersInMemoryRepository implements AllUsers {
         return this.users.find(u => u.username === username);
     }
 
+    remove(id: number): void {
+        this.users = this.users.filter(u => u.id !== id);
+    }
+
 }
 
 export default AllUsersInMemoryRepository;

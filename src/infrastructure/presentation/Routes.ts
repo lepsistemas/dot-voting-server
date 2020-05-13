@@ -18,6 +18,7 @@ import AllUsersInMemoryRepository from '../repository/AllUsersInMemoryRepository
 import UserController from './UserController';
 import FetchUser from '../../domain/usercase/FetchUser';
 import CreateUser from '../../domain/usercase/CreateUser';
+import DeleteRoom from '../../domain/usercase/DeleteRoom';
 
 class Routes {
 
@@ -36,6 +37,7 @@ class Routes {
     private fetchRoom: FetchRoom;
     private createRoom: CreateRoom;
     private enterRoom: EnterRoom;
+    private deleteRoom: DeleteRoom;
 
     constructor() {
         this.routes = Router();
@@ -49,9 +51,10 @@ class Routes {
         this.fetchRoom = new FetchRoom(this.allRooms);
         this.createRoom = new CreateRoom(this.createUser, this.allRooms);
         this.enterRoom = new EnterRoom(this.createUser, this.allUsers, this.allRooms);
+        this.deleteRoom = new DeleteRoom(this.allRooms, this.allUsers);
 
         this.userController = new UserController(this.fetchUser);
-        this.roomController = new RoomController(this.fetchRoom, this.createRoom);
+        this.roomController = new RoomController(this.fetchRoom, this.createRoom, this.deleteRoom);
         this.roomEntranceController = new RoomEntranceController(this.enterRoom);
     }
     
@@ -82,7 +85,13 @@ class Routes {
         this.routes.post('/api/v1/rooms-entrance', (request, response) => {
             const result: any = this.roomEntranceController.enter(new RoomEntranceRequest(request.body));
             this.handleResponse(response, result);
-        })
+        });
+
+        this.routes.delete('/api/v1/rooms/:id', (request, response) => {
+            const id: number = parseInt(request.params.id);
+            this.roomController.delete(id);
+            this.handleResponse(response, null);
+        });
 
         return this.routes;
     }

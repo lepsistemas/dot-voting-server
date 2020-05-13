@@ -9,15 +9,18 @@ import FetchRoom from "../../domain/usercase/FetchRoom";
 import CreateRoom from "../../domain/usercase/CreateRoom";
 import RoomData from "../../domain/usercase/RoomData";
 import Room from "../../domain/model/Room";
+import DeleteRoom from "../../domain/usercase/DeleteRoom";
 
 class RoomController {
 
     private fetchRoom: FetchRoom;
     private createRoom: CreateRoom;
+    private deleteRoom: DeleteRoom;
 
-    constructor(fetchRoom: FetchRoom, createRoom: CreateRoom) {
+    constructor(fetchRoom: FetchRoom, createRoom: CreateRoom, deleteRoom: DeleteRoom) {
         this.fetchRoom = fetchRoom;
         this.createRoom = createRoom;
+        this.deleteRoom = deleteRoom;
     }
 
     public all(): RoomResponse[] {
@@ -52,6 +55,10 @@ class RoomController {
                 }
             };
         }
+    }
+
+    public delete(id: number): void {
+        this.deleteRoom.by(id);
     }
 
 }
