@@ -1,5 +1,5 @@
 import User from "../model/User";
-import UserData from "./UserData";
+import UserData from "./dto/UserData";
 import AllUsers from "./collection/AllUsers";
 import UserAlreadyExistsException from "./exception/UserAlreadyExistsException";
 

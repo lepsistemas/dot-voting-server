@@ -7,8 +7,8 @@ import RequestToRoomData from "../convert/RequestToRoomData";
 import RoomToResponse from "../convert/RoomToResponse";
 import RequestToRoomLockerData from "../convert/RequestToRoomLockerData";
 
-import RoomLockerData from "../../domain/usercase/RoomLockerData";
-import RoomData from "../../domain/usercase/RoomData";
+import RoomLockerData from "../../domain/usercase/dto/RoomLockerData";
+import RoomData from "../../domain/usercase/dto/RoomData";
 
 import Room from "../../domain/model/Room";
 import FetchRoom from "../../domain/usercase/FetchRoom";

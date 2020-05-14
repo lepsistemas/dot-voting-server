@@ -1,4 +1,4 @@
-import RoomLockerData from "./RoomLockerData";
+import RoomLockerData from "./dto/RoomLockerData";
 import Room from "../model/Room";
 import AllRooms from "./collection/AllRooms";
 import RoomNotFoundException from "./exception/RoomNotFoundException";

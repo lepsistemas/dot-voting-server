@@ -1,4 +1,6 @@
-import { Router } from 'express';
+import { Express } from 'express';
+import { Server } from 'socket.io';
+import { Subject } from 'rxjs';
 
 import RoomController from '../presentation/RoomController';
 import RoomRequest from './dto/RoomRequest';
@@ -6,6 +8,8 @@ import RoomLockerRequest from './dto/RoomLockerRequest';
 
 import RoomEntranceController from './RoomEntranceController';
 import RoomEntranceRequest from './dto/RoomEntranceRequest';
+
+import RoomEntrance from '../../domain/model/RoomEntrance';
 
 import UserController from './UserController';
 
@@ -24,9 +28,12 @@ import AllRoomsInMemoryRepository from '../repository/AllRoomsInMemoryRepository
 import AllUsers from '../../domain/usercase/collection/AllUsers';
 import AllUsersInMemoryRepository from '../repository/AllUsersInMemoryRepository';
 
-class Routes {
+import EnterRoomHandler from '../../domain/usercase/event/EnterRoomHandler';
 
-    private routes: Router;
+import EventPublisher from '../event/EventPublisher';
+import EventSubscriber from '../event/EventSubscriber';
+
+class Routes {
 
     private userController: UserController;
     private roomController: RoomController;
@@ -44,8 +51,18 @@ class Routes {
     private deleteRoom: DeleteRoom;
     private lockerRoom: LockerRoom;
 
-    constructor() {
-        this.routes = Router();
+    private enterRoomHandler: EnterRoomHandler;
+
+    private socket: Server;
+    private http: Express;
+    private eventBus: Subject<any>;
+
+    constructor(http: Express, socket: Server) {
+        this.http = http;
+        this.socket = socket;
+        this.eventBus = new Subject<any>();
+
+        this.enterRoomHandler = new EnterRoomHandler(new EventPublisher<RoomEntrance>(this.eventBus));
         
         this.allUsers = new AllUsersInMemoryRepository();
         this.allRooms = new AllRoomsInMemoryRepository();
@@ -55,7 +72,7 @@ class Routes {
 
         this.fetchRoom = new FetchRoom(this.allRooms);
         this.createRoom = new CreateRoom(this.createUser, this.allRooms);
-        this.enterRoom = new EnterRoom(this.createUser, this.allUsers, this.allRooms);
+        this.enterRoom = new EnterRoom(this.enterRoomHandler, this.createUser, this.allUsers, this.allRooms);
         this.deleteRoom = new DeleteRoom(this.allRooms, this.allUsers);
         this.lockerRoom = new LockerRoom(this.allRooms);
 
@@ -64,49 +81,57 @@ class Routes {
         this.roomEntranceController = new RoomEntranceController(this.enterRoom);
     }
     
-    public create(): Router {
+    public start(): void {
 
-        this.routes.get('/api/v1/users/:id', (request, response) => {
+        this.http.get('/api/v1/users/:id', (request, response) => {
             const id: number = parseInt(request.params.id);
             const result: any = this.userController.id(id);
             this.handleResponse(response, result);
         });
 
-        this.routes.get('/api/v1/rooms', (request, response) => {
+        this.http.get('/api/v1/rooms', (request, response) => {
             let result: any = this.roomController.all();
             this.handleResponse(response, result);
         });
 
-        this.routes.get('/api/v1/rooms/:id', (request, response) => {
+        this.http.get('/api/v1/rooms/:id', (request, response) => {
             const id: number = parseInt(request.params.id);
             const result: any = this.roomController.id(id);
             this.handleResponse(response, result);
         });
 
-        this.routes.post('/api/v1/rooms', (request, response) => {
+        this.http.post('/api/v1/rooms', (request, response) => {
             const result: any = this.roomController.create(new RoomRequest(request.body));
             this.handleResponse(response, result);
         });
 
-        this.routes.post('/api/v1/rooms-entrance', (request, response) => {
+        this.http.post('/api/v1/rooms-entrance', (request, response) => {
             const result: any = this.roomEntranceController.enter(new RoomEntranceRequest(request.body));
             this.handleResponse(response, result);
         });
 
-        this.routes.delete('/api/v1/rooms/:id', (request, response) => {
+        this.http.delete('/api/v1/rooms/:id', (request, response) => {
             const id: number = parseInt(request.params.id);
             this.roomController.delete(id);
             this.handleResponse(response, null);
         });
 
-        this.routes.post('/api/v1/rooms/:id/locker', (request, response) => {
+        this.http.post('/api/v1/rooms/:id/locker', (request, response) => {
             let roomLockerRequest: RoomLockerRequest = new RoomLockerRequest(request.body);
             roomLockerRequest.id = parseInt(request.params.id);
             const result: any = this.roomController.locker(roomLockerRequest);
             this.handleResponse(response, result);
         });
 
-        return this.routes;
+        
+        this.socket.on('connection', socket => {
+
+            socket.on('disconnect', () => {
+            });
+        });
+
+        const subscriber: EventSubscriber = new EventSubscriber(this.socket, this.eventBus);
+        subscriber.subscribe();
     }
 
     private handleResponse(response: any, dto: any): void {

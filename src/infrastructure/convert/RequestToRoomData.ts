@@ -1,5 +1,5 @@
 import RoomRequest from "../presentation/dto/RoomRequest";
-import RoomData from "../../domain/usercase/RoomData";
+import RoomData from "../../domain/usercase/dto/RoomData";
 
 class RequestToRoomData {
 

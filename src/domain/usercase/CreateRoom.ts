@@ -1,10 +1,10 @@
 import Room from "../model/Room";
-import RoomData from "./RoomData";
+import RoomData from "./dto/RoomData";
 import User from "../model/User";
 
 import AllRooms from "./collection/AllRooms";
 import CreateUser from "./CreateUser";
-import UserData from "./UserData";
+import UserData from "./dto/UserData";
 
 import UserAlreadyInRoomException from "./exception/UserAlreadyInRoomException";
 import RoomAlreadyExistsException from "./exception/RoomAlreadyExistsException";

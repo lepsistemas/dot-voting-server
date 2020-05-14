@@ -4,8 +4,8 @@ import Room from "../model/Room";
 import RoomEntrance from "../model/RoomEntrance";
 import User from "../model/User";
 
-import RoomEntranceData from "./RoomEntranceData";
-import UserData from "./UserData";
+import RoomEntranceData from "./dto/RoomEntranceData";
+import UserData from "./dto/UserData";
 
 import CreateUser from "./CreateUser";
 
@@ -13,17 +13,21 @@ import AllUsers from "./collection/AllUsers";
 
 import RoomNotFoundException from "./exception/RoomNotFoundException";
 import RoomIsLockedException from "./exception/RoomIsLockedException";
+import EnterRoomHandler from "./event/EnterRoomHandler";
+import EventMessage from "./event/EventMessage";
 
 class EnterRoom {
 
     private createUser: CreateUser;
     private allUsers: AllUsers;
     private allRooms: AllRooms;
+    private handler: EnterRoomHandler;
 
-    constructor(createUser: CreateUser, allUsers: AllUsers, allRooms: AllRooms) {
+    constructor(handler: EnterRoomHandler, createUser: CreateUser, allUsers: AllUsers, allRooms: AllRooms) {
         this.allUsers = allUsers;
         this.createUser = createUser;
         this.allRooms = allRooms;
+        this.handler = handler;
     }
 
     with(data: RoomEntranceData): RoomEntrance {
@@ -60,6 +64,8 @@ class EnterRoom {
             id: room.id,
             guest: guest
         }
+
+        this.handler.handle(entrance);
 
         return entrance;
     }
