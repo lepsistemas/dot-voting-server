@@ -10,11 +10,11 @@ class FetchUser {
         this.allUsers = allUsers;
     }
 
-    all(): User[] {
+    public all(): User[] {
         return this.allUsers.all();
     }
 
-    byId(id: number): User {
+    public byId(id: number): User {
         const user: User = this.allUsers.byId(id);
         if (!user) {
             throw new UserNotFoundException();
@@ -22,7 +22,7 @@ class FetchUser {
         return user;
     }
 
-    byUsername(username: string): User {
+    public byUsername(username: string): User {
         const user: User = this.allUsers.byUsername(username);
         if (!user) {
             throw new UserNotFoundException();

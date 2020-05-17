@@ -1,9 +1,10 @@
-import RoomLockerData from "./dto/RoomLockerData";
+import Card from "../model/Card";
+import CardCreationData from "./dto/CardCreationData";
 import Room from "../model/Room";
 import AllRooms from "./collection/AllRooms";
 import RoomNotFoundException from "./exception/RoomNotFoundException";
 
-class LockerRoom {
+class CreateCard {
 
     private allRooms: AllRooms;
 
@@ -11,16 +12,14 @@ class LockerRoom {
         this.allRooms = allRooms;
     }
 
-    public with(data: RoomLockerData): Room {
-        const room: Room = this.allRooms.byId(data.id);
+    public with(data: CardCreationData): Card {
+        const room: Room = this.allRooms.byId(data.roomId);
         if (!room) {
             throw new RoomNotFoundException();
         }
-        room.locked = data.lock;
-        this.allRooms.put(room.id, room);
-        return this.allRooms.byId(room.id);
+        return null;
     }
 
 }
 
-export default LockerRoom;
+export default CreateCard;

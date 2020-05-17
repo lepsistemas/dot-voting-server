@@ -11,7 +11,7 @@ class CreateUser {
         this.allUsers = allUsers;
     }
 
-    with(data: UserData): User {
+    public with(data: UserData): User {
         const existingUser: User = this.allUsers.withUsername(data.username);
         if (existingUser) {
             throw new UserAlreadyExistsException(data.username);

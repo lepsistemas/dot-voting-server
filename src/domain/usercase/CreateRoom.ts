@@ -1,5 +1,5 @@
 import Room from "../model/Room";
-import RoomData from "./dto/RoomData";
+import RoomCreationData from "./dto/RoomCreationData";
 import User from "../model/User";
 
 import AllRooms from "./collection/AllRooms";
@@ -20,7 +20,7 @@ class CreateRoom {
         this.allRooms = allRooms;
     }
 
-    public with(data: RoomData): Room {
+    public with(data: RoomCreationData): Room {
         let owner: User = null;
         try {
             const user: UserData = {

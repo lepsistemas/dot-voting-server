@@ -30,7 +30,7 @@ class EnterRoom {
         this.handler = handler;
     }
 
-    with(data: RoomEntranceData): Guest {
+    public with(data: RoomEntranceData): Guest {
         const room: Room = this.allRooms.byNameAndKey(data.name, data.key);
         if (!room) {
             throw new RoomNotFoundException();

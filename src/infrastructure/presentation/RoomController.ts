@@ -3,12 +3,12 @@ import RoomRequest from "./dto/RoomRequest";
 import RoomLockerRequest from "./dto/RoomLockerRequest";
 import ErrorResponse from "./dto/ErrorResponse";
 
-import RequestToRoomData from "../convert/RequestToRoomData";
+import RequestToRoomCreationData from "../convert/RequestToRoomCreationData";
 import RoomToResponse from "../convert/RoomToResponse";
 import RequestToRoomLockerData from "../convert/RequestToRoomLockerData";
 
 import RoomLockerData from "../../domain/usercase/dto/RoomLockerData";
-import RoomData from "../../domain/usercase/dto/RoomData";
+import RoomCreationData from "../../domain/usercase/dto/RoomCreationData";
 
 import Room from "../../domain/model/Room";
 import FetchRoom from "../../domain/usercase/FetchRoom";
@@ -50,7 +50,7 @@ class RoomController {
     }
 
     public create(request: RoomRequest): RoomResponse | ErrorResponse {
-        const data: RoomData = RequestToRoomData.convert(request);
+        const data: RoomCreationData = RequestToRoomCreationData.convert(request);
         try {
             const room: Room = this.createRoom.with(data);
             return RoomToResponse.convert(room);

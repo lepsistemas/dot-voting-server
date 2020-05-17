@@ -28,7 +28,7 @@ class ExitRoom {
         this.allUsers = allUsers;
     }
 
-    with(data: RoomExitData): Guest {
+    public with(data: RoomExitData): Guest {
         const room: Room = this.allRooms.byId(data.id);
         if (!room) {
             throw new RoomNotFoundException();

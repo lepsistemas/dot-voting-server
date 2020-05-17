@@ -1,4 +1,4 @@
-class Vote {
+interface Vote {
 
 }
 

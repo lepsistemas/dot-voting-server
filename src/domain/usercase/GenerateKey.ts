@@ -1,6 +1,6 @@
 class GenerateKey {
 
-    static withSize(size: number): string {
+    public static withSize(size: number): string {
         return Math.random().toString(36).slice(size * (-1));
     }
 

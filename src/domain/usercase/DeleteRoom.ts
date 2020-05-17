@@ -16,7 +16,7 @@ class DeleteRoom {
         this.allUsers = allUsers;
     }
 
-    by(id: number): void {
+    public by(id: number): void {
         const room: Room = this.allRooms.byId(id);
         if (!room) {
             throw new RoomNotFoundException();

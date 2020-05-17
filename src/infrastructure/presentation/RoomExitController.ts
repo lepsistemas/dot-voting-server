@@ -22,8 +22,6 @@ class RoomExitController {
         const data: RoomExitData = RequestToRoomExitData.convert(request);
         try {
             const guest: Guest = this.exitRoom.with(data);
-            request.id;
-            request.userId;
             return GuestToResponse.convert(guest);
         } catch(e) {
             return {
