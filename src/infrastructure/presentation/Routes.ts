@@ -9,15 +9,17 @@ import RoomLockerRequest from './dto/RoomLockerRequest';
 import RoomEntranceController from './RoomEntranceController';
 import RoomEntranceRequest from './dto/RoomEntranceRequest';
 
-import RoomEntrance from '../../domain/model/RoomEntrance';
+import Guest from '../../domain/model/Guest';
+import Room from '../../domain/model/Room';
 
 import UserController from './UserController';
 
 import FetchRoom from '../../domain/usercase/FetchRoom';
 import CreateRoom from '../../domain/usercase/CreateRoom';
-import EnterRoom from '../../domain/usercase/EnterRoom';
 import DeleteRoom from '../../domain/usercase/DeleteRoom';
 import LockerRoom from '../../domain/usercase/LockerRoom';
+import EnterRoom from '../../domain/usercase/EnterRoom';
+import ExitRoom from '../../domain/usercase/ExitRoom';
 
 import FetchUser from '../../domain/usercase/FetchUser';
 import CreateUser from '../../domain/usercase/CreateUser';
@@ -29,15 +31,20 @@ import AllUsers from '../../domain/usercase/collection/AllUsers';
 import AllUsersInMemoryRepository from '../repository/AllUsersInMemoryRepository';
 
 import EnterRoomHandler from '../../domain/usercase/event/EnterRoomHandler';
+import ExitRoomHandler from '../../domain/usercase/event/ExitRoomHandler';
+import DeleteRoomHandler from '../../domain/usercase/event/DeleteRoomHandler';
 
 import EventPublisher from '../event/EventPublisher';
 import EventSubscriber from '../event/EventSubscriber';
+import RoomExitRequest from './dto/RoomExitRequest';
+import RoomExitController from './RoomExitController';
 
 class Routes {
 
     private userController: UserController;
     private roomController: RoomController;
     private roomEntranceController: RoomEntranceController;
+    private roomExitController: RoomExitController;
 
     private allUsers: AllUsers;
     private allRooms: AllRooms;
@@ -50,8 +57,11 @@ class Routes {
     private enterRoom: EnterRoom;
     private deleteRoom: DeleteRoom;
     private lockerRoom: LockerRoom;
+    private exitRoom: ExitRoom;
 
     private enterRoomHandler: EnterRoomHandler;
+    private exitRoomHandler: ExitRoomHandler;
+    private deleteRoomHandler: DeleteRoomHandler;
 
     private socket: Server;
     private http: Express;
@@ -62,7 +72,9 @@ class Routes {
         this.socket = socket;
         this.eventBus = new Subject<any>();
 
-        this.enterRoomHandler = new EnterRoomHandler(new EventPublisher<RoomEntrance>(this.eventBus));
+        this.enterRoomHandler = new EnterRoomHandler(new EventPublisher<Guest>(this.eventBus));
+        this.exitRoomHandler = new ExitRoomHandler(new EventPublisher<Guest>(this.eventBus));
+        this.deleteRoomHandler = new DeleteRoomHandler(new EventPublisher<Room>(this.eventBus));
         
         this.allUsers = new AllUsersInMemoryRepository();
         this.allRooms = new AllRoomsInMemoryRepository();
@@ -72,13 +84,15 @@ class Routes {
 
         this.fetchRoom = new FetchRoom(this.allRooms);
         this.createRoom = new CreateRoom(this.createUser, this.allRooms);
-        this.enterRoom = new EnterRoom(this.enterRoomHandler, this.createUser, this.allUsers, this.allRooms);
-        this.deleteRoom = new DeleteRoom(this.allRooms, this.allUsers);
+        this.deleteRoom = new DeleteRoom(this.deleteRoomHandler, this.allRooms, this.allUsers);
         this.lockerRoom = new LockerRoom(this.allRooms);
+        this.enterRoom = new EnterRoom(this.enterRoomHandler, this.createUser, this.allUsers, this.allRooms);
+        this.exitRoom = new ExitRoom(this.exitRoomHandler, this.deleteRoom, this.allRooms, this.allUsers);
 
         this.userController = new UserController(this.fetchUser);
         this.roomController = new RoomController(this.fetchRoom, this.createRoom, this.deleteRoom, this.lockerRoom);
         this.roomEntranceController = new RoomEntranceController(this.enterRoom);
+        this.roomExitController = new RoomExitController(this.exitRoom);
     }
     
     public start(): void {
@@ -105,11 +119,6 @@ class Routes {
             this.handleResponse(response, result);
         });
 
-        this.http.post('/api/v1/rooms-entrance', (request, response) => {
-            const result: any = this.roomEntranceController.enter(new RoomEntranceRequest(request.body));
-            this.handleResponse(response, result);
-        });
-
         this.http.delete('/api/v1/rooms/:id', (request, response) => {
             const id: number = parseInt(request.params.id);
             this.roomController.delete(id);
@@ -123,6 +132,15 @@ class Routes {
             this.handleResponse(response, result);
         });
 
+        this.http.post('/api/v1/rooms-entrance', (request, response) => {
+            const result: any = this.roomEntranceController.enter(new RoomEntranceRequest(request.body));
+            this.handleResponse(response, result);
+        });
+
+        this.http.post('/api/v1/rooms-exit', (request, response) => {
+            const result: any = this.roomExitController.exit(new RoomExitRequest(request.body));
+            this.handleResponse(response, result);
+        });
         
         this.socket.on('connection', socket => {
 

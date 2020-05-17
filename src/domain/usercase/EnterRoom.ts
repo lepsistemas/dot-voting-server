@@ -1,8 +1,8 @@
 import AllRooms from "./collection/AllRooms";
 
 import Room from "../model/Room";
-import RoomEntrance from "../model/RoomEntrance";
 import User from "../model/User";
+import Guest from "../model/Guest";
 
 import RoomEntranceData from "./dto/RoomEntranceData";
 import UserData from "./dto/UserData";
@@ -13,8 +13,8 @@ import AllUsers from "./collection/AllUsers";
 
 import RoomNotFoundException from "./exception/RoomNotFoundException";
 import RoomIsLockedException from "./exception/RoomIsLockedException";
+
 import EnterRoomHandler from "./event/EnterRoomHandler";
-import EventMessage from "./event/EventMessage";
 
 class EnterRoom {
 
@@ -30,7 +30,7 @@ class EnterRoom {
         this.handler = handler;
     }
 
-    with(data: RoomEntranceData): RoomEntrance {
+    with(data: RoomEntranceData): Guest {
         const room: Room = this.allRooms.byNameAndKey(data.name, data.key);
         if (!room) {
             throw new RoomNotFoundException();
@@ -44,30 +44,30 @@ class EnterRoom {
             room.guests = [];
         }
 
-        let guest: User = this.allUsers.byUsername(data.username);
-        if (!guest) {
+        let user: User = this.allUsers.byUsername(data.username);
+        if (!user) {
             const userData: UserData = {
                 username: data.username,
                 admin: false
             }
             
             try {
-                guest = this.createUser.with(userData);
+                user = this.createUser.with(userData);
             } catch(e) {
                 throw e;
             }
-            room.guests.push(guest);
         }
+        room.guests.push(user);
         this.allRooms.put(room.id, room);
 
-        const entrance: RoomEntrance = {
-            id: room.id,
-            guest: guest
+        const guest: Guest = {
+            room: room,
+            user: user
         }
 
-        this.handler.handle(entrance);
+        this.handler.handle(guest);
 
-        return entrance;
+        return guest;
     }
 
 }

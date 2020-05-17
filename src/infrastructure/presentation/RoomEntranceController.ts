@@ -1,13 +1,13 @@
 import EnterRoom from "../../domain/usercase/EnterRoom";
-import RoomEntrance from "../../domain/model/RoomEntrance";
+import Guest from "../../domain/model/Guest";
 import RoomEntranceData from "../../domain/usercase/dto/RoomEntranceData";
 
 import RequestToRoomEntranceData from "../convert/RequestToRoomEntranceData";
-import RoomEntranceToResponse from "../convert/RoomEntranceToResponse";
+import GuestToResponse from "../convert/GuestToResponse";
 
 import RoomEntranceRequest from "./dto/RoomEntranceRequest";
-import RoomEntranceResponse from "./dto/RoomEntranceResponse";
 import ErrorResponse from "./dto/ErrorResponse";
+import GuestResponse from "./dto/GuestResponse";
 
 class RoomEntranceController {
 
@@ -17,11 +17,11 @@ class RoomEntranceController {
         this.enterRoom = enterRoom;
     }
     
-    public enter(request: RoomEntranceRequest): RoomEntranceResponse | ErrorResponse {
+    public enter(request: RoomEntranceRequest): GuestResponse | ErrorResponse {
         const data: RoomEntranceData = RequestToRoomEntranceData.convert(request);
         try {
-            const entrance: RoomEntrance = this.enterRoom.with(data);
-            return RoomEntranceToResponse.convert(entrance);
+            const guest: Guest = this.enterRoom.with(data);
+            return GuestToResponse.convert(guest);
         } catch(e) {
             return {
                 error: {

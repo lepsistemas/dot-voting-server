@@ -14,7 +14,7 @@ class EventSubscriber {
 
     public subscribe(): void {
         this.eventBus.subscribe(message => {
-            this.io.emit(message.key, message.data);
+            this.io.emit(message.key, JSON.stringify(message.data));
         });
     }
 

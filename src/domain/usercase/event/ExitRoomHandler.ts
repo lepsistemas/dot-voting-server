@@ -1,8 +1,8 @@
 import EventBus from './EventBus';
 import EventMessage from './EventMessage';
-import Guest from "../../../domain/model/Guest";
+import Guest from "../../model/Guest";
 
-class EnterRoomHandler {
+class ExitRoomHandler {
 
     private static KEY: string = 'ROOM-CHANGED';
 
@@ -14,11 +14,11 @@ class EnterRoomHandler {
 
     public handle(data: Guest): void {
         const message: EventMessage<Guest> = {
-            key: `ROOM:${data.room.id}_${EnterRoomHandler.KEY}`,
+            key: `ROOM:${data.room.id}_${ExitRoomHandler.KEY}`,
             data: data
         }
         this.eventBus.publish(message);
     }
 }
 
-export default EnterRoomHandler;
+export default ExitRoomHandler;

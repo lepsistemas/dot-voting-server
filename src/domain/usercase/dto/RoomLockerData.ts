@@ -1,7 +1,7 @@
 interface RoomLockerData {
 
     id: number;
-    lock: boolean
+    lock: boolean;
 
 }
 
