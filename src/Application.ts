@@ -11,20 +11,21 @@ import DeleteRoom from './domain/usercase/DeleteRoom';
 import LockerRoom from './domain/usercase/LockerRoom';
 import EnterRoom from './domain/usercase/EnterRoom';
 import ExitRoom from './domain/usercase/ExitRoom';
+import CreateCard from './domain/usercase/CreateCard';
 
 import FetchUser from './domain/usercase/FetchUser';
 import CreateUser from './domain/usercase/CreateUser';
 
 import AllRooms from './domain/usercase/collection/AllRooms';
-
 import AllUsers from './domain/usercase/collection/AllUsers';
+import AllCards from './domain/usercase/collection/AllCards';
 
 import EnterRoomHandler from './domain/usercase/event/EnterRoomHandler';
 import ExitRoomHandler from './domain/usercase/event/ExitRoomHandler';
 import DeleteRoomHandler from './domain/usercase/event/DeleteRoomHandler';
 
 import RoomController from './infrastructure/presentation/RoomController';
-import RoomRequest from './infrastructure/presentation/dto/RoomRequest';
+import RoomRequest from './infrastructure/presentation/dto/RoomCreationRequest';
 import RoomLockerRequest from './infrastructure/presentation/dto/RoomLockerRequest';
 
 import RoomEntranceController from './infrastructure/presentation/RoomEntranceController';
@@ -35,11 +36,15 @@ import RoomExitController from './infrastructure/presentation/RoomExitController
 
 import UserController from './infrastructure/presentation/UserController';
 
+import CardController from './infrastructure/presentation/CardController';
+
 import EventPublisher from './infrastructure/event/EventPublisher';
 import EventSubscriber from './infrastructure/event/EventSubscriber';
 
 import AllUsersInMemoryRepository from './infrastructure/repository/AllUsersInMemoryRepository';
 import AllRoomsInMemoryRepository from './infrastructure/repository/AllRoomsInMemoryRepository';
+import AllCardsInMemoryRepository from './infrastructure/repository/AllCardsInMemoryRepository';
+import CardCreationRequest from './infrastructure/presentation/dto/CardCreationRequest';
 
 class Application {
 
@@ -47,9 +52,11 @@ class Application {
     private roomController: RoomController;
     private roomEntranceController: RoomEntranceController;
     private roomExitController: RoomExitController;
+    private cardController: CardController;
 
     private allUsers: AllUsers;
     private allRooms: AllRooms;
+    private allCards: AllCards;
 
     private createUser: CreateUser;
     private fetchUser: FetchUser;
@@ -60,6 +67,7 @@ class Application {
     private deleteRoom: DeleteRoom;
     private lockerRoom: LockerRoom;
     private exitRoom: ExitRoom;
+    private createCard: CreateCard;
 
     private enterRoomHandler: EnterRoomHandler;
     private exitRoomHandler: ExitRoomHandler;
@@ -80,6 +88,7 @@ class Application {
         
         this.allUsers = new AllUsersInMemoryRepository();
         this.allRooms = new AllRoomsInMemoryRepository();
+        this.allCards = new AllCardsInMemoryRepository();
 
         this.fetchUser = new FetchUser(this.allUsers);
         this.createUser = new CreateUser(this.allUsers);
@@ -90,11 +99,13 @@ class Application {
         this.lockerRoom = new LockerRoom(this.allRooms);
         this.enterRoom = new EnterRoom(this.enterRoomHandler, this.createUser, this.allUsers, this.allRooms);
         this.exitRoom = new ExitRoom(this.exitRoomHandler, this.deleteRoom, this.allRooms, this.allUsers);
+        this.createCard = new CreateCard(this.allRooms, this.allUsers, this.allCards);
 
         this.userController = new UserController(this.fetchUser);
         this.roomController = new RoomController(this.fetchRoom, this.createRoom, this.deleteRoom, this.lockerRoom);
         this.roomEntranceController = new RoomEntranceController(this.enterRoom);
         this.roomExitController = new RoomExitController(this.exitRoom);
+        this.cardController = new CardController(this.createCard);
     }
     
     public start(): void {
@@ -143,12 +154,16 @@ class Application {
             const result: any = this.roomExitController.exit(new RoomExitRequest(request.body));
             this.handleResponse(response, result);
         });
-        
-        this.socket.on('connection', socket => {
 
+        this.http.post('/api/v1/cards', (request, response) => {
+            const result: any = this.cardController.create(new CardCreationRequest(request.body));
+            this.handleResponse(response, result);
+        });
+        
+        /*this.socket.on('connection', socket => {
             socket.on('disconnect', () => {
             });
-        });
+        });*/
 
         const subscriber: EventSubscriber = new EventSubscriber(this.socket, this.eventBus);
         subscriber.subscribe();

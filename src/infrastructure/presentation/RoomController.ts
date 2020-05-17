@@ -1,5 +1,5 @@
 import RoomResponse from "./dto/RoomResponse";
-import RoomRequest from "./dto/RoomRequest";
+import RoomCreationRequest from "./dto/RoomCreationRequest";
 import RoomLockerRequest from "./dto/RoomLockerRequest";
 import ErrorResponse from "./dto/ErrorResponse";
 
@@ -49,7 +49,7 @@ class RoomController {
         }
     }
 
-    public create(request: RoomRequest): RoomResponse | ErrorResponse {
+    public create(request: RoomCreationRequest): RoomResponse | ErrorResponse {
         const data: RoomCreationData = RequestToRoomCreationData.convert(request);
         try {
             const room: Room = this.createRoom.with(data);

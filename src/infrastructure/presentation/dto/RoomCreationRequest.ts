@@ -1,4 +1,4 @@
-class RoomRequest {
+class RoomCreationRequest {
     
     name: string;
     username: string;
@@ -9,4 +9,4 @@ class RoomRequest {
     }
 }
 
-export default RoomRequest;
+export default RoomCreationRequest;
