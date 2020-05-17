@@ -3,7 +3,7 @@ import User from "./User";
 
 interface Card {
 
-    id: number;
+    id?: number;
     title: string;
     description: string;
     author: User;
