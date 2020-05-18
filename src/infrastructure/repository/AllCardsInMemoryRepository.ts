@@ -17,6 +17,10 @@ class AllCardsInMemoryRepository implements AllCards {
         return card;
     }
 
+    belongingTo(roomId: number): Card[] {
+        return this.cards.filter(card => card.room.id === roomId);
+    }
+
 }
 
 export default AllCardsInMemoryRepository;

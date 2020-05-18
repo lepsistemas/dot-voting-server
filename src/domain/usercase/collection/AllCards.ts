@@ -4,6 +4,8 @@ interface AllCards {
 
     add(card: Card): Card;
 
+    belongingTo(roomId: number): Card[];
+
 }
 
 export default AllCards;

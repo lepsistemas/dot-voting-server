@@ -11,7 +11,9 @@ import DeleteRoom from './domain/usercase/DeleteRoom';
 import LockerRoom from './domain/usercase/LockerRoom';
 import EnterRoom from './domain/usercase/EnterRoom';
 import ExitRoom from './domain/usercase/ExitRoom';
+
 import CreateCard from './domain/usercase/CreateCard';
+import FetchCard from './domain/usercase/FetchCard';
 
 import FetchUser from './domain/usercase/FetchUser';
 import CreateUser from './domain/usercase/CreateUser';
@@ -67,7 +69,9 @@ class Application {
     private deleteRoom: DeleteRoom;
     private lockerRoom: LockerRoom;
     private exitRoom: ExitRoom;
+
     private createCard: CreateCard;
+    private fetchCard: FetchCard;
 
     private enterRoomHandler: EnterRoomHandler;
     private exitRoomHandler: ExitRoomHandler;
@@ -99,13 +103,15 @@ class Application {
         this.lockerRoom = new LockerRoom(this.allRooms);
         this.enterRoom = new EnterRoom(this.enterRoomHandler, this.createUser, this.allUsers, this.allRooms);
         this.exitRoom = new ExitRoom(this.exitRoomHandler, this.deleteRoom, this.allRooms, this.allUsers);
+
+        this.fetchCard = new FetchCard(this.allRooms, this.allCards);
         this.createCard = new CreateCard(this.allRooms, this.allUsers, this.allCards);
 
         this.userController = new UserController(this.fetchUser);
         this.roomController = new RoomController(this.fetchRoom, this.createRoom, this.deleteRoom, this.lockerRoom);
         this.roomEntranceController = new RoomEntranceController(this.enterRoom);
         this.roomExitController = new RoomExitController(this.exitRoom);
-        this.cardController = new CardController(this.createCard);
+        this.cardController = new CardController(this.fetchCard, this.createCard);
     }
     
     public start(): void {
@@ -159,11 +165,12 @@ class Application {
             const result: any = this.cardController.create(new CardCreationRequest(request.body));
             this.handleResponse(response, result);
         });
-        
-        /*this.socket.on('connection', socket => {
-            socket.on('disconnect', () => {
-            });
-        });*/
+
+        this.http.get('/api/v1/cards', (request, response) => {
+            const roomId: number = Number(request.query['roomId']);
+            const result: any = this.cardController.fromRoom(roomId);
+            this.handleResponse(response, result);
+        });
 
         const subscriber: EventSubscriber = new EventSubscriber(this.socket, this.eventBus);
         subscriber.subscribe();
