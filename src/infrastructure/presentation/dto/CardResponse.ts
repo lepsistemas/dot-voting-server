@@ -8,6 +8,7 @@ interface CardResponse {
     author: UserResponse;
     title: string;
     description: string;
+    votes: number;
 
 }
 

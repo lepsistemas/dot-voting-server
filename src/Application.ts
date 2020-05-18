@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 
 import Guest from './domain/model/Guest';
 import Room from './domain/model/Room';
+import Card from './domain/model/Card';
 
 import FetchRoom from './domain/usercase/FetchRoom';
 import CreateRoom from './domain/usercase/CreateRoom';
@@ -39,6 +40,8 @@ import RoomExitController from './infrastructure/presentation/RoomExitController
 import UserController from './infrastructure/presentation/UserController';
 
 import CardController from './infrastructure/presentation/CardController';
+import CardCreationRequest from './infrastructure/presentation/dto/CardCreationRequest';
+import CardsChangedHandler from './domain/usercase/event/CardsChangedHandler';
 
 import EventPublisher from './infrastructure/event/EventPublisher';
 import EventSubscriber from './infrastructure/event/EventSubscriber';
@@ -46,7 +49,6 @@ import EventSubscriber from './infrastructure/event/EventSubscriber';
 import AllUsersInMemoryRepository from './infrastructure/repository/AllUsersInMemoryRepository';
 import AllRoomsInMemoryRepository from './infrastructure/repository/AllRoomsInMemoryRepository';
 import AllCardsInMemoryRepository from './infrastructure/repository/AllCardsInMemoryRepository';
-import CardCreationRequest from './infrastructure/presentation/dto/CardCreationRequest';
 
 class Application {
 
@@ -76,6 +78,7 @@ class Application {
     private enterRoomHandler: EnterRoomHandler;
     private exitRoomHandler: ExitRoomHandler;
     private deleteRoomHandler: DeleteRoomHandler;
+    private cardsChangedHandler: CardsChangedHandler;
 
     private socket: Server;
     private http: Express;
@@ -89,6 +92,7 @@ class Application {
         this.enterRoomHandler = new EnterRoomHandler(new EventPublisher<Guest>(this.eventBus));
         this.exitRoomHandler = new ExitRoomHandler(new EventPublisher<Guest>(this.eventBus));
         this.deleteRoomHandler = new DeleteRoomHandler(new EventPublisher<Room>(this.eventBus));
+        this.cardsChangedHandler = new CardsChangedHandler(new EventPublisher<Card>(this.eventBus));
         
         this.allUsers = new AllUsersInMemoryRepository();
         this.allRooms = new AllRoomsInMemoryRepository();
@@ -99,13 +103,13 @@ class Application {
 
         this.fetchRoom = new FetchRoom(this.allRooms);
         this.createRoom = new CreateRoom(this.createUser, this.allRooms);
-        this.deleteRoom = new DeleteRoom(this.deleteRoomHandler, this.allRooms, this.allUsers);
+        this.deleteRoom = new DeleteRoom(this.deleteRoomHandler, this.allRooms, this.allUsers, this.allCards);
         this.lockerRoom = new LockerRoom(this.allRooms);
         this.enterRoom = new EnterRoom(this.enterRoomHandler, this.createUser, this.allUsers, this.allRooms);
         this.exitRoom = new ExitRoom(this.exitRoomHandler, this.deleteRoom, this.allRooms, this.allUsers);
 
         this.fetchCard = new FetchCard(this.allRooms, this.allCards);
-        this.createCard = new CreateCard(this.allRooms, this.allUsers, this.allCards);
+        this.createCard = new CreateCard(this.cardsChangedHandler, this.allRooms, this.allUsers, this.allCards);
 
         this.userController = new UserController(this.fetchUser);
         this.roomController = new RoomController(this.fetchRoom, this.createRoom, this.deleteRoom, this.lockerRoom);

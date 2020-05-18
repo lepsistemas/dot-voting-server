@@ -11,7 +11,8 @@ class CardToResponse {
             title: card.title,
             description: card.description,
             room: RoomToResponse.convert(card.room),
-            author: UserToResponse.convert(card.author)
+            author: UserToResponse.convert(card.author),
+            votes: card.votes
         }
 
         return converted;

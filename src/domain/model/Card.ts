@@ -8,6 +8,7 @@ interface Card {
     description: string;
     author: User;
     room: Room;
+    votes: number;
 
 }
 

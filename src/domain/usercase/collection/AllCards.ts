@@ -5,6 +5,8 @@ interface AllCards {
     add(card: Card): Card;
 
     belongingTo(roomId: number): Card[];
+    
+    remove(id: number): void;
 
 }
 
