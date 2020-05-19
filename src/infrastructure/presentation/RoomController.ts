@@ -82,8 +82,8 @@ class RoomController {
     public update(id: number, body: any): RoomResponse | ErrorResponse {
         try {
             let data: RoomUpdateData = {};
-            if (body.maxVotes) {
-                data.maxVotes = Number(body.maxVotes);
+            if (body.numberOfVotes) {
+                data.numberOfVotes = Number(body.numberOfVotes);
             }
             if (body.allowMultipleVotesPerCard !== undefined) {
                 data.allowMultipleVotesPerCard = body.allowMultipleVotesPerCard === false ? false : true;

@@ -17,7 +17,7 @@ class RoomToResponse {
             owner: UserToResponse.convert(room.owner),
             locked: room.locked === false ? false : true,
             guests: guests,
-            maxVotes: room.maxVotes,
+            numberOfVotes: room.numberOfVotes,
             allowMultipleVotesPerCard: room.allowMultipleVotesPerCard
         }
 

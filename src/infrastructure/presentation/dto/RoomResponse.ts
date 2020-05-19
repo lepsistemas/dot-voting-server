@@ -8,7 +8,7 @@ interface RoomResponse {
     owner: UserResponse;
     locked: boolean;
     guests?: UserResponse[];
-    maxVotes: number;
+    numberOfVotes: number;
     allowMultipleVotesPerCard: boolean;
 }
 

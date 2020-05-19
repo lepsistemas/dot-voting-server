@@ -1,6 +1,6 @@
 interface RoomUpdateData {
 
-    maxVotes?: number;
+    numberOfVotes?: number;
     allowMultipleVotesPerCard?: boolean;
 
 }

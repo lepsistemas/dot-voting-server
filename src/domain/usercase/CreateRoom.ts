@@ -50,7 +50,7 @@ class CreateRoom {
             key: key,
             owner: owner,
             locked: true,
-            maxVotes: 0,
+            numberOfVotes: 0,
             allowMultipleVotesPerCard: false
         }
         try {

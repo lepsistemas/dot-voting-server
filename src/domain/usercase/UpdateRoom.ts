@@ -17,8 +17,8 @@ class UpdateRoom {
             throw new RoomNotFoundException();
         }
 
-        if (data.maxVotes) {
-            room.maxVotes = data.maxVotes;
+        if (data.numberOfVotes) {
+            room.numberOfVotes = data.numberOfVotes;
         }
         if (data.allowMultipleVotesPerCard !== undefined) {
             room.allowMultipleVotesPerCard = data.allowMultipleVotesPerCard === false ? false : true;
