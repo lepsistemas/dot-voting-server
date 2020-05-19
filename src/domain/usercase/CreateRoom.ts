@@ -49,7 +49,9 @@ class CreateRoom {
             name: data.name,
             key: key,
             owner: owner,
-            locked: true
+            locked: true,
+            maxVotes: 0,
+            allowMultipleVotesPerCard: false
         }
         try {
             return this.allRooms.add(room);

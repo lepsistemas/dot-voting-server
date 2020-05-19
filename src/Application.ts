@@ -12,6 +12,7 @@ import DeleteRoom from './domain/usercase/DeleteRoom';
 import LockerRoom from './domain/usercase/LockerRoom';
 import EnterRoom from './domain/usercase/EnterRoom';
 import ExitRoom from './domain/usercase/ExitRoom';
+import UpdateRoom from './domain/usercase/UpdateRoom';
 
 import CreateCard from './domain/usercase/CreateCard';
 import FetchCard from './domain/usercase/FetchCard';
@@ -71,6 +72,7 @@ class Application {
     private deleteRoom: DeleteRoom;
     private lockerRoom: LockerRoom;
     private exitRoom: ExitRoom;
+    private updateRoom: UpdateRoom;
 
     private createCard: CreateCard;
     private fetchCard: FetchCard;
@@ -107,12 +109,13 @@ class Application {
         this.lockerRoom = new LockerRoom(this.allRooms);
         this.enterRoom = new EnterRoom(this.enterRoomHandler, this.createUser, this.allUsers, this.allRooms);
         this.exitRoom = new ExitRoom(this.exitRoomHandler, this.deleteRoom, this.allRooms, this.allUsers);
+        this.updateRoom = new UpdateRoom(this.allRooms);
 
         this.fetchCard = new FetchCard(this.allRooms, this.allCards);
         this.createCard = new CreateCard(this.cardsChangedHandler, this.allRooms, this.allUsers, this.allCards);
 
         this.userController = new UserController(this.fetchUser);
-        this.roomController = new RoomController(this.fetchRoom, this.createRoom, this.deleteRoom, this.lockerRoom);
+        this.roomController = new RoomController(this.fetchRoom, this.createRoom, this.deleteRoom, this.lockerRoom, this.updateRoom);
         this.roomEntranceController = new RoomEntranceController(this.enterRoom);
         this.roomExitController = new RoomExitController(this.exitRoom);
         this.cardController = new CardController(this.fetchCard, this.createCard);
@@ -146,6 +149,12 @@ class Application {
             const id: number = parseInt(request.params.id);
             this.roomController.delete(id);
             this.handleResponse(response, null);
+        });
+
+        this.http.patch('/api/v1/rooms/:id', (request, response) => {
+            const id: number = parseInt(request.params.id);
+            const result: any = this.roomController.update(id, request.body);
+            this.handleResponse(response, result);
         });
 
         this.http.post('/api/v1/rooms/:id/locker', (request, response) => {

@@ -4,7 +4,7 @@ class RoomLockerRequest {
     lock: boolean;
 
     constructor(body: any) {
-        this.lock = body.lock;
+        this.lock = body.lock === false ? false : true;
     }
 
 }

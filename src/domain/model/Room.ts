@@ -8,6 +8,8 @@ interface Room {
     owner: User;
     locked: boolean;
     guests?: User[];
+    maxVotes: number;
+    allowMultipleVotesPerCard: boolean;
 
 }
 

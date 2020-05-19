@@ -16,7 +16,7 @@ class LockerRoom {
         if (!room) {
             throw new RoomNotFoundException();
         }
-        room.locked = data.lock;
+        room.locked = data.lock === false ? false : true;
         this.allRooms.put(room.id, room);
         return this.allRooms.byId(room.id);
     }

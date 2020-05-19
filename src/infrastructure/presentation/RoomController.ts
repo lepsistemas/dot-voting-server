@@ -15,6 +15,9 @@ import FetchRoom from "../../domain/usercase/FetchRoom";
 import CreateRoom from "../../domain/usercase/CreateRoom";
 import DeleteRoom from "../../domain/usercase/DeleteRoom";
 import LockerRoom from "../../domain/usercase/LockerRoom";
+import UpdateRoom from "../../domain/usercase/UpdateRoom";
+
+import RoomUpdateData from "../../domain/usercase/dto/RoomUpdateData";
 
 class RoomController {
 
@@ -22,12 +25,14 @@ class RoomController {
     private createRoom: CreateRoom;
     private deleteRoom: DeleteRoom;
     private lockerRoom: LockerRoom;
+    private updateRoom: UpdateRoom;
 
-    constructor(fetchRoom: FetchRoom, createRoom: CreateRoom, deleteRoom: DeleteRoom, lockerRoom: LockerRoom) {
+    constructor(fetchRoom: FetchRoom, createRoom: CreateRoom, deleteRoom: DeleteRoom, lockerRoom: LockerRoom, updateRoom: UpdateRoom) {
         this.fetchRoom = fetchRoom;
         this.createRoom = createRoom;
         this.deleteRoom = deleteRoom;
         this.lockerRoom = lockerRoom;
+        this.updateRoom = updateRoom;
     }
 
     public all(): RoomResponse[] {
@@ -72,6 +77,27 @@ class RoomController {
         const data: RoomLockerData = RequestToRoomLockerData.convert(request);
         const room: Room = this.lockerRoom.with(data);
         return RoomToResponse.convert(room);
+    }
+
+    public update(id: number, body: any): RoomResponse | ErrorResponse {
+        try {
+            let data: RoomUpdateData = {};
+            if (body.maxVotes) {
+                data.maxVotes = Number(body.maxVotes);
+            }
+            if (body.allowMultipleVotesPerCard !== undefined) {
+                data.allowMultipleVotesPerCard = body.allowMultipleVotesPerCard === false ? false : true;
+            }
+            const room: Room = this.updateRoom.with(id, data);
+            return RoomToResponse.convert(room);
+        } catch(e) {
+            return {
+                error: {
+                    status: 400,
+                    message: e.message
+                }
+            };
+        }
     }
 
 }

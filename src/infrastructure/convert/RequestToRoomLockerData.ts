@@ -6,7 +6,7 @@ class RequestToRoomLockerData {
     static convert(request: RoomLockerRequest): RoomLockerData {
         const converted: RoomLockerData = {
             id: request.id,
-            lock: request.lock
+            lock: request.lock === false ? false : true
         }
 
         return converted;

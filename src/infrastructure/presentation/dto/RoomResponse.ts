@@ -7,7 +7,9 @@ interface RoomResponse {
     name: string;
     owner: UserResponse;
     locked: boolean;
-    guests?: UserResponse[]
+    guests?: UserResponse[];
+    maxVotes: number;
+    allowMultipleVotesPerCard: boolean;
 }
 
 export default RoomResponse;
