@@ -191,6 +191,7 @@ class Application {
 
     private handleResponse(response: any, dto: any): void {
         if (dto && dto.error) {
+            console.error(dto.error);
             response.status(dto.error.status);
             response.send(dto);
         } else {
