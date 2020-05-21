@@ -126,7 +126,7 @@ class Application {
         this.fetchCard = new FetchCard(this.allRooms, this.allCards);
         this.createCard = new CreateCard(this.cardsChangedHandler, this.allRooms, this.allUsers, this.allCards);
 
-        this.giveVote = new GiveVote(this.allVotes, this.allCards, this.allUsers, this.allRooms);
+        this.giveVote = new GiveVote(this.cardsChangedHandler, this.allVotes, this.allCards, this.allUsers, this.allRooms);
 
         this.userController = new UserController(this.fetchUser);
         this.roomController = new RoomController(this.fetchRoom, this.createRoom, this.deleteRoom, this.lockerRoom, this.updateRoom);

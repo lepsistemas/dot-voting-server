@@ -10,6 +10,8 @@ import AllUsers from "./collection/AllUsers";
 import AllRooms from "./collection/AllRooms";
 import AllVotes from "./collection/AllVotes";
 
+import CardsChangedHandler from "./event/CardsChangedHandler";
+
 import CardNotFoundException from "./exception/CardNotFoundException";
 import UserNotFoundException from "./exception/UserNotFoundException";
 import NumberOfVotesExceededException from "./exception/NumberOfVotesExceededException";
@@ -17,12 +19,14 @@ import CardAlreadyVotedException from "./exception/CardAlreadyVotedException";
 
 class GiveVote {
 
+    private handler: CardsChangedHandler;
     private allVotes: AllVotes;
     private allCards: AllCards;
     private allUsers: AllUsers;
     private allRooms: AllRooms;
 
-    constructor(allVotes: AllVotes, allCards: AllCards, allUsers: AllUsers, allRooms: AllRooms) {
+    constructor(handler: CardsChangedHandler, allVotes: AllVotes, allCards: AllCards, allUsers: AllUsers, allRooms: AllRooms) {
+        this.handler = handler;
         this.allVotes = allVotes;
         this.allCards = allCards;
         this.allUsers = allUsers;
@@ -56,6 +60,8 @@ class GiveVote {
 
         card.votes++;
         this.allCards.put(card.id, card);
+
+        this.handler.handle(card);
 
         const vote: Vote = {
             voter: voter,
