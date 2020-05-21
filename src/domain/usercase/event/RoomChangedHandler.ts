@@ -4,7 +4,7 @@ import EventMessage from './EventMessage';
 
 class RoomChangedHandler {
 
-    private static KEY: string = 'ROOM-DELETED';
+    private static KEY: string = 'ROOM-CHANGED';
 
     private eventBus: EventBus<Room>
 

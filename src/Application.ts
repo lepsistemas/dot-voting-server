@@ -30,6 +30,7 @@ import GiveVote from './domain/usercase/GiveVote';
 import EnterRoomHandler from './domain/usercase/event/EnterRoomHandler';
 import ExitRoomHandler from './domain/usercase/event/ExitRoomHandler';
 import DeleteRoomHandler from './domain/usercase/event/DeleteRoomHandler';
+import RoomChangedHandler from './domain/usercase/event/RoomChangedHandler';
 
 import RoomController from './infrastructure/presentation/RoomController';
 import RoomRequest from './infrastructure/presentation/dto/RoomCreationRequest';
@@ -92,6 +93,7 @@ class Application {
     private exitRoomHandler: ExitRoomHandler;
     private deleteRoomHandler: DeleteRoomHandler;
     private cardsChangedHandler: CardsChangedHandler;
+    private roomChangedHandler: RoomChangedHandler;
 
     private socket: Server;
     private http: Express;
@@ -105,6 +107,7 @@ class Application {
         this.enterRoomHandler = new EnterRoomHandler(new EventPublisher<Guest>(this.eventBus));
         this.exitRoomHandler = new ExitRoomHandler(new EventPublisher<Guest>(this.eventBus));
         this.deleteRoomHandler = new DeleteRoomHandler(new EventPublisher<Room>(this.eventBus));
+        this.roomChangedHandler = new RoomChangedHandler(new EventPublisher<Room>(this.eventBus));
         this.cardsChangedHandler = new CardsChangedHandler(new EventPublisher<Card>(this.eventBus));
         
         this.allUsers = new AllUsersInMemoryRepository();
@@ -121,7 +124,7 @@ class Application {
         this.lockerRoom = new LockerRoom(this.allRooms);
         this.enterRoom = new EnterRoom(this.enterRoomHandler, this.createUser, this.allUsers, this.allRooms);
         this.exitRoom = new ExitRoom(this.exitRoomHandler, this.deleteRoom, this.allRooms, this.allUsers);
-        this.updateRoom = new UpdateRoom(this.allRooms);
+        this.updateRoom = new UpdateRoom(this.roomChangedHandler, this.allRooms);
 
         this.fetchCard = new FetchCard(this.allRooms, this.allCards);
         this.createCard = new CreateCard(this.cardsChangedHandler, this.allRooms, this.allUsers, this.allCards);
