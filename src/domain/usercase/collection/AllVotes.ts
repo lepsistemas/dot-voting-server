@@ -8,6 +8,8 @@ interface AllVotes {
 
     add(vote: Vote): Vote;
 
+    remove(id: number): void;
+
 }
 
 export default AllVotes;

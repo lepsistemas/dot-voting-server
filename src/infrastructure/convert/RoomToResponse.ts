@@ -18,7 +18,8 @@ class RoomToResponse {
             locked: room.locked === false ? false : true,
             guests: guests,
             numberOfVotes: room.numberOfVotes,
-            allowMultipleVotesPerCard: room.allowMultipleVotesPerCard
+            allowMultipleVotesPerCard: room.allowMultipleVotesPerCard === false ? false : true,
+            showResults: room.showResults === false ? false : true
         }
 
         return converted;

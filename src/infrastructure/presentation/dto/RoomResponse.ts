@@ -10,6 +10,7 @@ interface RoomResponse {
     guests?: UserResponse[];
     numberOfVotes: number;
     allowMultipleVotesPerCard: boolean;
+    showResults: boolean;
 }
 
 export default RoomResponse;

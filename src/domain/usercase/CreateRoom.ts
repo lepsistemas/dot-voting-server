@@ -51,7 +51,8 @@ class CreateRoom {
             owner: owner,
             locked: true,
             numberOfVotes: 0,
-            allowMultipleVotesPerCard: false
+            allowMultipleVotesPerCard: false,
+            showResults: false
         }
         try {
             return this.allRooms.add(room);

@@ -24,7 +24,7 @@ class AllCardsInMemoryRepository implements AllCards {
     public belongingTo(roomId: number): Card[] {
         return this.cards
             .filter(card => card.room.id === roomId)
-            .sort(({ votes: previous }, { votes: current }) => previous >= current ? current : previous);
+            // .sort((previous, current) => previous.votes < current.votes ? 1 : -1);
     }
 
     public remove(id: number): void {

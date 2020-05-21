@@ -117,7 +117,7 @@ class Application {
 
         this.fetchRoom = new FetchRoom(this.allRooms);
         this.createRoom = new CreateRoom(this.createUser, this.allRooms);
-        this.deleteRoom = new DeleteRoom(this.deleteRoomHandler, this.allRooms, this.allUsers, this.allCards);
+        this.deleteRoom = new DeleteRoom(this.deleteRoomHandler, this.allRooms, this.allUsers, this.allCards, this.allVotes);
         this.lockerRoom = new LockerRoom(this.allRooms);
         this.enterRoom = new EnterRoom(this.enterRoomHandler, this.createUser, this.allUsers, this.allRooms);
         this.exitRoom = new ExitRoom(this.exitRoomHandler, this.deleteRoom, this.allRooms, this.allUsers);

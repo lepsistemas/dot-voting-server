@@ -8,6 +8,8 @@ import Room from '../model/Room';
 import Card from '../model/Card';
 
 import RoomNotFoundException from './exception/RoomNotFoundException';
+import AllVotes from './collection/AllVotes';
+import Vote from '../model/Vote';
 
 class DeleteRoom {
 
@@ -15,12 +17,14 @@ class DeleteRoom {
     private allRooms: AllRooms;
     private allUsers: AllUsers;
     private allCards: AllCards;
+    private allVotes: AllVotes;
 
-    constructor(handler: DeleteRoomHandler, allRooms: AllRooms, allUsers: AllUsers, allCards: AllCards) {
+    constructor(handler: DeleteRoomHandler, allRooms: AllRooms, allUsers: AllUsers, allCards: AllCards, allVotes: AllVotes) {
         this.handler = handler;
         this.allRooms = allRooms;
         this.allUsers = allUsers;
         this.allCards = allCards;
+        this.allVotes = allVotes;
     }
 
     public by(id: number): void {
@@ -35,7 +39,11 @@ class DeleteRoom {
         this.allUsers.remove(room.owner.id);
 
         const cards: Card[] = this.allCards.belongingTo(room.id);
-        cards.forEach(card => this.allCards.remove(card.id));
+        cards.forEach(card => {
+            this.allCards.remove(card.id);
+            const votes: Vote[] = this.allVotes.forCard(card.id);
+            votes.forEach(vote => this.allVotes.remove(vote.id));
+        });
 
         this.allRooms.remove(id);
 

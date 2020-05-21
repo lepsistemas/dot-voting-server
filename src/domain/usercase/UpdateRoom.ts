@@ -23,6 +23,9 @@ class UpdateRoom {
         if (data.allowMultipleVotesPerCard !== undefined) {
             room.allowMultipleVotesPerCard = data.allowMultipleVotesPerCard === false ? false : true;
         }
+        if (data.showResults !== undefined) {
+            room.showResults = data.showResults === false ? false : true;
+        }
 
         this.allRooms.put(room.id, room);
 

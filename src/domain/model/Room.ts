@@ -10,6 +10,7 @@ interface Room {
     guests?: User[];
     numberOfVotes: number;
     allowMultipleVotesPerCard: boolean;
+    showResults: boolean;
 
 }
 

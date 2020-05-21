@@ -25,6 +25,10 @@ class AllVotesInMemoryRepository implements AllVotes {
         return vote;
     }
 
+    public remove(id: number): void {
+        this.votes = this.votes.filter(v => v.id !== id);
+    }
+
 }
 
 export default AllVotesInMemoryRepository;

@@ -88,6 +88,9 @@ class RoomController {
             if (body.allowMultipleVotesPerCard !== undefined) {
                 data.allowMultipleVotesPerCard = body.allowMultipleVotesPerCard === false ? false : true;
             }
+            if (body.showResults !== undefined) {
+                data.showResults = body.showResults === false ? false : true;
+            }
             const room: Room = this.updateRoom.with(id, data);
             return RoomToResponse.convert(room);
         } catch(e) {
