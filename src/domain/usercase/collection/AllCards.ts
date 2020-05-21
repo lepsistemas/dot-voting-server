@@ -1,6 +1,8 @@
 import Card from "../../../domain/model/Card";
 
 interface AllCards {
+    
+    byId(cardId: number): Card;
 
     add(card: Card): Card;
 
@@ -8,6 +10,7 @@ interface AllCards {
     
     remove(id: number): void;
 
+    put(id: number, card: Card): void;
 }
 
 export default AllCards;

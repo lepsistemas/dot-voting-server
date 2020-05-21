@@ -23,6 +23,9 @@ import CreateUser from './domain/usercase/CreateUser';
 import AllRooms from './domain/usercase/collection/AllRooms';
 import AllUsers from './domain/usercase/collection/AllUsers';
 import AllCards from './domain/usercase/collection/AllCards';
+import AllVotes from './domain/usercase/collection/AllVotes';
+
+import GiveVote from './domain/usercase/GiveVote';
 
 import EnterRoomHandler from './domain/usercase/event/EnterRoomHandler';
 import ExitRoomHandler from './domain/usercase/event/ExitRoomHandler';
@@ -44,12 +47,16 @@ import CardController from './infrastructure/presentation/CardController';
 import CardCreationRequest from './infrastructure/presentation/dto/CardCreationRequest';
 import CardsChangedHandler from './domain/usercase/event/CardsChangedHandler';
 
+import VoteController from './infrastructure/presentation/VoteController';
+import VoteGivenRequest from './infrastructure/presentation/dto/VoteGivenRequest';
+
 import EventPublisher from './infrastructure/event/EventPublisher';
 import EventSubscriber from './infrastructure/event/EventSubscriber';
 
 import AllUsersInMemoryRepository from './infrastructure/repository/AllUsersInMemoryRepository';
 import AllRoomsInMemoryRepository from './infrastructure/repository/AllRoomsInMemoryRepository';
 import AllCardsInMemoryRepository from './infrastructure/repository/AllCardsInMemoryRepository';
+import AllVotesInMemoryRepository from './infrastructure/repository/AllVotesInMemoryRepository';
 
 class Application {
 
@@ -58,10 +65,12 @@ class Application {
     private roomEntranceController: RoomEntranceController;
     private roomExitController: RoomExitController;
     private cardController: CardController;
+    private voteController: VoteController;
 
     private allUsers: AllUsers;
     private allRooms: AllRooms;
     private allCards: AllCards;
+    private allVotes: AllVotes;
 
     private createUser: CreateUser;
     private fetchUser: FetchUser;
@@ -76,6 +85,8 @@ class Application {
 
     private createCard: CreateCard;
     private fetchCard: FetchCard;
+
+    private giveVote: GiveVote;
 
     private enterRoomHandler: EnterRoomHandler;
     private exitRoomHandler: ExitRoomHandler;
@@ -99,6 +110,7 @@ class Application {
         this.allUsers = new AllUsersInMemoryRepository();
         this.allRooms = new AllRoomsInMemoryRepository();
         this.allCards = new AllCardsInMemoryRepository();
+        this.allVotes = new AllVotesInMemoryRepository();
 
         this.fetchUser = new FetchUser(this.allUsers);
         this.createUser = new CreateUser(this.allUsers);
@@ -114,11 +126,14 @@ class Application {
         this.fetchCard = new FetchCard(this.allRooms, this.allCards);
         this.createCard = new CreateCard(this.cardsChangedHandler, this.allRooms, this.allUsers, this.allCards);
 
+        this.giveVote = new GiveVote(this.allVotes, this.allCards, this.allUsers, this.allRooms);
+
         this.userController = new UserController(this.fetchUser);
         this.roomController = new RoomController(this.fetchRoom, this.createRoom, this.deleteRoom, this.lockerRoom, this.updateRoom);
         this.roomEntranceController = new RoomEntranceController(this.enterRoom);
         this.roomExitController = new RoomExitController(this.exitRoom);
         this.cardController = new CardController(this.fetchCard, this.createCard);
+        this.voteController = new VoteController(this.giveVote);
     }
     
     public start(): void {
@@ -182,6 +197,11 @@ class Application {
         this.http.get('/api/v1/cards', (request, response) => {
             const roomId: number = Number(request.query['roomId']);
             const result: any = this.cardController.fromRoom(roomId);
+            this.handleResponse(response, result);
+        });
+
+        this.http.post('/api/v1/votes', (request, response) => {
+            const result: any = this.voteController.give(new VoteGivenRequest(request.body));
             this.handleResponse(response, result);
         });
 

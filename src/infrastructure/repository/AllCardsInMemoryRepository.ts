@@ -8,6 +8,10 @@ class AllCardsInMemoryRepository implements AllCards {
     constructor() {
         this.cards = [];
     }
+
+    public byId(id: number): Card {
+        return this.cards.find(card => card.id === id);
+    }
     
     public add(card: Card): Card {
         const lastId: number = this.cards.reduce((previous, current) => (previous > current.id) ? previous : current.id, 0);
@@ -17,14 +21,23 @@ class AllCardsInMemoryRepository implements AllCards {
         return card;
     }
 
-    belongingTo(roomId: number): Card[] {
+    public belongingTo(roomId: number): Card[] {
         return this.cards
             .filter(card => card.room.id === roomId)
-            .sort(({ votes: previous }, { votes: current }) => previous >  current ? previous : current);
+            .sort(({ votes: previous }, { votes: current }) => previous >= current ? current : previous);
     }
 
-    remove(id: number): void {
+    public remove(id: number): void {
         this.cards = this.cards.filter(c => c.id !== id);
+    }
+
+    public put(id: number, card: Card): void {
+        this.cards.map(c => {
+            if (c.id === id) {
+                return card;
+            }
+            return c;
+        });
     }
 
 }

@@ -35,7 +35,7 @@ class AllRoomsInMemoryRepository implements AllRooms {
                 return room;
             }
             return r;
-        })
+        });
     }
 
     remove(id: number): void {
