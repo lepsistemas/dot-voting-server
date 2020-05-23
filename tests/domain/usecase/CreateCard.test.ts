@@ -1,19 +1,24 @@
-import CreateRoom from '../../../src/domain/usercase/CreateRoom';
 import { expect } from 'chai';
+import { beforeEach } from 'mocha';
 import * as TypeMoq from 'typemoq';
-import AllRooms from '../../../src/domain/usercase/collection/AllRooms';
+
+import CreateRoom from '../../../src/domain/usercase/CreateRoom';
 import CreateUser from '../../../src/domain/usercase/CreateUser';
+import GenerateKey from '../../../src/domain/usercase/GenerateKey';
+
+import AllRooms from '../../../src/domain/usercase/collection/AllRooms';
+
 import RoomCreationData from '../../../src/domain/usercase/dto/RoomCreationData';
+import UserData from '../../../src/domain/usercase/dto/UserData';
+
 import Room from '../../../src/domain/model/Room';
 import User from '../../../src/domain/model/User';
-import UserData from '../../../src/domain/usercase/dto/UserData';
+
 import UserAlreadyInRoomException from '../../../src/domain/usercase/exception/UserAlreadyInRoomException';
 import RoomAlreadyExistsException from '../../../src/domain/usercase/exception/RoomAlreadyExistsException';
-import GenerateKey from '../../../src/domain/usercase/GenerateKey';
-import { beforeEach } from 'mocha';
 import UserAlreadyExistsException from '../../../src/domain/usercase/exception/UserAlreadyExistsException';
 
-describe('When creating a new room', () => {
+describe('When creating a room', () => {
 
     const createUser = TypeMoq.Mock.ofType<CreateUser>();
     const allRooms = TypeMoq.Mock.ofType<AllRooms>();
@@ -37,19 +42,6 @@ describe('When creating a new room', () => {
             admin: true
         }
         createUser.setup(mock => mock.with(userData)).throws(new UserAlreadyExistsException('username'));
-
-        // const rooms: Room[] = [
-        //     {
-        //         key: 'key',
-        //         locked: true,
-        //         name: 'name',
-        //         numberOfVotes: 0,
-        //         allowMultipleVotesPerCard: false,
-        //         showResults: false,
-        //         owner: user
-        //     }
-        // ];
-        // allRooms.setup(mock => mock.all()).returns(() => rooms);
 
         const data: RoomCreationData = {
             name: 'room',
