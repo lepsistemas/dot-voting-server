@@ -14,10 +14,12 @@ class CreateRoom {
 
     private createUser: CreateUser;
     private allRooms: AllRooms;
+    private generateKey: GenerateKey;
 
-    constructor(createUser: CreateUser, allRooms: AllRooms) {
+    constructor(createUser: CreateUser, allRooms: AllRooms, generateKey: GenerateKey) {
         this.createUser = createUser;
         this.allRooms = allRooms;
+        this.generateKey = generateKey;
     }
 
     public with(data: RoomCreationData): Room {
@@ -43,7 +45,7 @@ class CreateRoom {
             throw new RoomAlreadyExistsException(otherRoom.name);
         }
         
-        const key: string = GenerateKey.withSize(8);
+        const key: string = this.generateKey.withSize(8);
 
         const room: Room = {
             name: data.name,
@@ -54,11 +56,7 @@ class CreateRoom {
             allowMultipleVotesPerCard: false,
             showResults: false
         }
-        try {
-            return this.allRooms.add(room);
-        } catch(e) {
-            throw e;
-        }
+        return this.allRooms.add(room);
     }
 
 }

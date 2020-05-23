@@ -13,6 +13,7 @@ import LockerRoom from './domain/usercase/LockerRoom';
 import EnterRoom from './domain/usercase/EnterRoom';
 import ExitRoom from './domain/usercase/ExitRoom';
 import UpdateRoom from './domain/usercase/UpdateRoom';
+import GenerateKey from './domain/usercase/GenerateKey';
 
 import CreateCard from './domain/usercase/CreateCard';
 import FetchCard from './domain/usercase/FetchCard';
@@ -76,6 +77,7 @@ class Application {
     private createUser: CreateUser;
     private fetchUser: FetchUser;
 
+    private generateKey: GenerateKey;
     private fetchRoom: FetchRoom;
     private createRoom: CreateRoom;
     private enterRoom: EnterRoom;
@@ -118,8 +120,9 @@ class Application {
         this.fetchUser = new FetchUser(this.allUsers);
         this.createUser = new CreateUser(this.allUsers);
 
+        this.generateKey = new GenerateKey();
         this.fetchRoom = new FetchRoom(this.allRooms);
-        this.createRoom = new CreateRoom(this.createUser, this.allRooms);
+        this.createRoom = new CreateRoom(this.createUser, this.allRooms, this.generateKey);
         this.deleteRoom = new DeleteRoom(this.deleteRoomHandler, this.allRooms, this.allUsers, this.allCards, this.allVotes);
         this.lockerRoom = new LockerRoom(this.allRooms);
         this.enterRoom = new EnterRoom(this.enterRoomHandler, this.createUser, this.allUsers, this.allRooms);
