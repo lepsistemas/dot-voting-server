@@ -152,7 +152,7 @@ describe('When creating a room', () => {
 
         const result: Room = createRoom.with(data);
 
-        expect(result).to.eq(addedRoom);
+        expect(result).to.be.equal(addedRoom);
     });
 
 });
