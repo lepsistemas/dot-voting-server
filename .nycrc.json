@@ -1,4 +1,11 @@
 {
     "all": true,
+    "exclude": [
+        "src/server.ts",
+        "src/Application.ts",
+        "src/WebSocket.ts",
+        "tests/",
+        "coverage"
+    ],
     "check-coverage": false
 }
