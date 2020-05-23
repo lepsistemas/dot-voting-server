@@ -14,7 +14,8 @@
     "watch-node": "nodemon dist/server.js",
     "watch-ts": "tsc -w",
     "test": "mocha -r ts-node/register tests/**/*.test.ts",
-    "coverage": "nyc yarn test && nyc report --reporter=text-lcov -e .ts -x \"*.test.ts\" | coveralls"
+    "coverage": "nyc yarn test && nyc report --reporter=text-lcov -e .ts -x \"*.test.ts\" | coveralls",
+    "coverage-local": "nyc -r lcov yarn test"
   },
   "devDependencies": {
     "@types/chai": "^4.2.11",
