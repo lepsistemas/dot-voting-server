@@ -126,7 +126,7 @@ describe('When entering a room', () => {
         expect(result.user.id).to.be.equal(2);
         expect(result.user.username).to.be.equal('guest');
 
-        handler.verify(mock => mock.handle(result), TypeMoq.Times.once())
+        handler.verify(mock => mock.handle(result), TypeMoq.Times.once());
     });
 
 });
