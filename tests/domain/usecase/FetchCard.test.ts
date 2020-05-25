@@ -47,14 +47,16 @@ describe('When fecthing cards', () => {
         }
         allRooms.setup(mock => mock.byId(1)).returns(() => room);
 
-        const cards: Card[] = [{
-            id: 1,
-            title: 'Title',
-            description: 'Description',
-            author: user,
-            room: room,
-            votes: 0
-        }]
+        const cards: Card[] = [
+            {
+                id: 1,
+                title: 'Title',
+                description: 'Description',
+                author: user,
+                room: room,
+                votes: 0
+            }
+        ]
         allCards.setup(mock => mock.belongingTo(1)).returns(() => cards);
 
         const result: Card[] = fetchCard.fromRoom(1);
