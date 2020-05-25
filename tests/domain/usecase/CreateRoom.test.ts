@@ -2,21 +2,21 @@ import { expect } from 'chai';
 import { beforeEach } from 'mocha';
 import * as TypeMoq from 'typemoq';
 
-import CreateRoom from '../../../src/domain/usercase/CreateRoom';
-import CreateUser from '../../../src/domain/usercase/CreateUser';
-import GenerateKey from '../../../src/domain/usercase/GenerateKey';
+import CreateRoom from '../../../src/domain/usecase/CreateRoom';
+import CreateUser from '../../../src/domain/usecase/CreateUser';
+import GenerateKey from '../../../src/domain/usecase/GenerateKey';
 
-import AllRooms from '../../../src/domain/usercase/collection/AllRooms';
+import AllRooms from '../../../src/domain/usecase/collection/AllRooms';
 
-import RoomCreationData from '../../../src/domain/usercase/dto/RoomCreationData';
-import UserData from '../../../src/domain/usercase/dto/UserData';
+import RoomCreationData from '../../../src/domain/usecase/dto/RoomCreationData';
+import UserData from '../../../src/domain/usecase/dto/UserData';
 
 import Room from '../../../src/domain/model/Room';
 import User from '../../../src/domain/model/User';
 
-import UserAlreadyInRoomException from '../../../src/domain/usercase/exception/UserAlreadyInRoomException';
-import RoomAlreadyExistsException from '../../../src/domain/usercase/exception/RoomAlreadyExistsException';
-import UserAlreadyExistsException from '../../../src/domain/usercase/exception/UserAlreadyExistsException';
+import UserAlreadyInRoomException from '../../../src/domain/usecase/exception/UserAlreadyInRoomException';
+import RoomAlreadyExistsException from '../../../src/domain/usecase/exception/RoomAlreadyExistsException';
+import UserAlreadyExistsException from '../../../src/domain/usecase/exception/UserAlreadyExistsException';
 
 describe('When creating a room', () => {
 

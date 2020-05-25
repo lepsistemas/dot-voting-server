@@ -2,15 +2,15 @@ import { expect } from 'chai';
 import { beforeEach } from 'mocha';
 import * as TypeMoq from 'typemoq';
 
-import LockerRoom from '../../../src/domain/usercase/LockerRoom';
+import LockerRoom from '../../../src/domain/usecase/LockerRoom';
 
-import RoomLockerData from '../../../src/domain/usercase/dto/RoomLockerData';
+import RoomLockerData from '../../../src/domain/usecase/dto/RoomLockerData';
 
 import Room from '../../../src/domain/model/Room';
 
-import AllRooms from '../../../src/domain/usercase/collection/AllRooms';
+import AllRooms from '../../../src/domain/usecase/collection/AllRooms';
 
-import RoomNotFoundException from '../../../src/domain/usercase/exception/RoomNotFoundException';
+import RoomNotFoundException from '../../../src/domain/usecase/exception/RoomNotFoundException';
 
 describe('When locking or unlocking a room', () => {
     

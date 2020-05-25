@@ -3,10 +3,10 @@ import CardResponse from "./dto/CardResponse";
 import CardCreationRequest from "./dto/CardCreationRequest";
 
 import Card from "../../domain/model/Card";
-import CreateCard from "../../domain/usercase/CreateCard";
-import CardCreationData from "../../domain/usercase/dto/CardCreationData";
+import CreateCard from "../../domain/usecase/CreateCard";
+import CardCreationData from "../../domain/usecase/dto/CardCreationData";
 
-import FetchCard from "../../domain/usercase/FetchCard";
+import FetchCard from "../../domain/usecase/FetchCard";
 
 import RequestToCardCreationData from "../convert/RequestToCardCreationData";
 import CardToResponse from "../convert/CardToResponse";

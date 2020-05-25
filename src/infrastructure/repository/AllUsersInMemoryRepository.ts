@@ -1,4 +1,4 @@
-import AllUsers from '../../domain/usercase/collection/AllUsers';
+import AllUsers from '../../domain/usecase/collection/AllUsers';
 import User from '../../domain/model/User';
 
 class AllUsersInMemoryRepository implements AllUsers {

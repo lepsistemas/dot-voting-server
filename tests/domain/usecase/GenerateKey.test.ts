@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import GenerateKey from '../../../src/domain/usercase/GenerateKey';
+import GenerateKey from '../../../src/domain/usecase/GenerateKey';
 
 describe('When generating a key', () => {
 

@@ -1,4 +1,4 @@
-import CardCreationData from "../../domain/usercase/dto/CardCreationData";
+import CardCreationData from "../../domain/usecase/dto/CardCreationData";
 import CardCreationRequest from "../presentation/dto/CardCreationRequest";
 
 class RequestToCardCreationData {

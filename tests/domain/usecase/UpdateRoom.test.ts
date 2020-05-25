@@ -2,14 +2,14 @@ import { expect } from 'chai';
 import { beforeEach } from 'mocha';
 import * as TypeMoq from 'typemoq';
 
-import UpdateRoom from '../../../src/domain/usercase/UpdateRoom';
+import UpdateRoom from '../../../src/domain/usecase/UpdateRoom';
 
-import RoomChangedHandler from '../../../src/domain/usercase/event/RoomChangedHandler';
+import RoomChangedHandler from '../../../src/domain/usecase/event/RoomChangedHandler';
 
-import AllRooms from '../../../src/domain/usercase/collection/AllRooms';
+import AllRooms from '../../../src/domain/usecase/collection/AllRooms';
 
-import RoomNotFoundException from '../../../src/domain/usercase/exception/RoomNotFoundException';
-import RoomUpdateData from '../../../src/domain/usercase/dto/RoomUpdateData';
+import RoomNotFoundException from '../../../src/domain/usecase/exception/RoomNotFoundException';
+import RoomUpdateData from '../../../src/domain/usecase/dto/RoomUpdateData';
 import Room from '../../../src/domain/model/Room';
 
 describe('When updating a room', () => {

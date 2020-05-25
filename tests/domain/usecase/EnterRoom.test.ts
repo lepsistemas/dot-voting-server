@@ -2,24 +2,24 @@ import { expect } from 'chai';
 import { beforeEach } from 'mocha';
 import * as TypeMoq from 'typemoq';
 
-import EnterRoom from '../../../src/domain/usercase/EnterRoom';
-import CreateUser from '../../../src/domain/usercase/CreateUser';
+import EnterRoom from '../../../src/domain/usecase/EnterRoom';
+import CreateUser from '../../../src/domain/usecase/CreateUser';
 
 import Guest from '../../../src/domain/model/Guest';
 import Room from '../../../src/domain/model/Room';
 import User from '../../../src/domain/model/User';
 
-import RoomEntranceData from '../../../src/domain/usercase/dto/RoomEntranceData';
-import UserData from '../../../src/domain/usercase/dto/UserData';
+import RoomEntranceData from '../../../src/domain/usecase/dto/RoomEntranceData';
+import UserData from '../../../src/domain/usecase/dto/UserData';
 
-import EnterRoomHandler from '../../../src/domain/usercase/event/EnterRoomHandler';
+import EnterRoomHandler from '../../../src/domain/usecase/event/EnterRoomHandler';
 
-import AllUsers from '../../../src/domain/usercase/collection/AllUsers';
-import AllRooms from '../../../src/domain/usercase/collection/AllRooms';
+import AllUsers from '../../../src/domain/usecase/collection/AllUsers';
+import AllRooms from '../../../src/domain/usecase/collection/AllRooms';
 
-import RoomNotFoundException from '../../../src/domain/usercase/exception/RoomNotFoundException';
-import RoomIsLockedException from '../../../src/domain/usercase/exception/RoomIsLockedException';
-import UserAlreadyExistsException from '../../../src/domain/usercase/exception/UserAlreadyExistsException';
+import RoomNotFoundException from '../../../src/domain/usecase/exception/RoomNotFoundException';
+import RoomIsLockedException from '../../../src/domain/usecase/exception/RoomIsLockedException';
+import UserAlreadyExistsException from '../../../src/domain/usecase/exception/UserAlreadyExistsException';
 
 describe('When entering a room', () => {
 

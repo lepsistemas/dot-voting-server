@@ -1,5 +1,5 @@
 import RoomRequest from "../presentation/dto/RoomCreationRequest";
-import RoomCreationData from "../../domain/usercase/dto/RoomCreationData";
+import RoomCreationData from "../../domain/usecase/dto/RoomCreationData";
 
 class RequestToRoomCreationData {
 

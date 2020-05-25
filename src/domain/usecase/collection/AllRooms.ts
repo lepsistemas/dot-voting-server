@@ -1,4 +1,4 @@
-import Room from "../../../domain/model/Room";
+import Room from "../../model/Room";
 
 interface AllRooms {
 

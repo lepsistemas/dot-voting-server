@@ -1,4 +1,4 @@
-import VoteGivenData from "../../domain/usercase/dto/VoteGivenData";
+import VoteGivenData from "../../domain/usecase/dto/VoteGivenData";
 import VoteGivenRequest from "../presentation/dto/VoteGivenRequest";
 
 class RequestToVoteGivenData {

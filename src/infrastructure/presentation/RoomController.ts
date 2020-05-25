@@ -7,17 +7,17 @@ import RequestToRoomCreationData from "../convert/RequestToRoomCreationData";
 import RoomToResponse from "../convert/RoomToResponse";
 import RequestToRoomLockerData from "../convert/RequestToRoomLockerData";
 
-import RoomLockerData from "../../domain/usercase/dto/RoomLockerData";
-import RoomCreationData from "../../domain/usercase/dto/RoomCreationData";
+import RoomLockerData from "../../domain/usecase/dto/RoomLockerData";
+import RoomCreationData from "../../domain/usecase/dto/RoomCreationData";
 
 import Room from "../../domain/model/Room";
-import FetchRoom from "../../domain/usercase/FetchRoom";
-import CreateRoom from "../../domain/usercase/CreateRoom";
-import DeleteRoom from "../../domain/usercase/DeleteRoom";
-import LockerRoom from "../../domain/usercase/LockerRoom";
-import UpdateRoom from "../../domain/usercase/UpdateRoom";
+import FetchRoom from "../../domain/usecase/FetchRoom";
+import CreateRoom from "../../domain/usecase/CreateRoom";
+import DeleteRoom from "../../domain/usecase/DeleteRoom";
+import LockerRoom from "../../domain/usecase/LockerRoom";
+import UpdateRoom from "../../domain/usecase/UpdateRoom";
 
-import RoomUpdateData from "../../domain/usercase/dto/RoomUpdateData";
+import RoomUpdateData from "../../domain/usecase/dto/RoomUpdateData";
 
 class RoomController {
 

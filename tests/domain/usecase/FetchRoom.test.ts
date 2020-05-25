@@ -2,13 +2,13 @@ import { expect } from 'chai';
 import { beforeEach } from 'mocha';
 import * as TypeMoq from 'typemoq';
 
-import FetchRoom from '../../../src/domain/usercase/FetchRoom';
+import FetchRoom from '../../../src/domain/usecase/FetchRoom';
 
 import Room from '../../../src/domain/model/Room';
 
-import AllRooms from '../../../src/domain/usercase/collection/AllRooms';
+import AllRooms from '../../../src/domain/usecase/collection/AllRooms';
 
-import RoomNotFoundException from '../../../src/domain/usercase/exception/RoomNotFoundException';
+import RoomNotFoundException from '../../../src/domain/usecase/exception/RoomNotFoundException';
 
 describe('When fetching all rooms', () => {
 

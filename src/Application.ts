@@ -6,32 +6,32 @@ import Guest from './domain/model/Guest';
 import Room from './domain/model/Room';
 import Card from './domain/model/Card';
 
-import FetchRoom from './domain/usercase/FetchRoom';
-import CreateRoom from './domain/usercase/CreateRoom';
-import DeleteRoom from './domain/usercase/DeleteRoom';
-import LockerRoom from './domain/usercase/LockerRoom';
-import EnterRoom from './domain/usercase/EnterRoom';
-import ExitRoom from './domain/usercase/ExitRoom';
-import UpdateRoom from './domain/usercase/UpdateRoom';
-import GenerateKey from './domain/usercase/GenerateKey';
+import FetchRoom from './domain/usecase/FetchRoom';
+import CreateRoom from './domain/usecase/CreateRoom';
+import DeleteRoom from './domain/usecase/DeleteRoom';
+import LockerRoom from './domain/usecase/LockerRoom';
+import EnterRoom from './domain/usecase/EnterRoom';
+import ExitRoom from './domain/usecase/ExitRoom';
+import UpdateRoom from './domain/usecase/UpdateRoom';
+import GenerateKey from './domain/usecase/GenerateKey';
 
-import CreateCard from './domain/usercase/CreateCard';
-import FetchCard from './domain/usercase/FetchCard';
+import CreateCard from './domain/usecase/CreateCard';
+import FetchCard from './domain/usecase/FetchCard';
 
-import FetchUser from './domain/usercase/FetchUser';
-import CreateUser from './domain/usercase/CreateUser';
+import FetchUser from './domain/usecase/FetchUser';
+import CreateUser from './domain/usecase/CreateUser';
 
-import AllRooms from './domain/usercase/collection/AllRooms';
-import AllUsers from './domain/usercase/collection/AllUsers';
-import AllCards from './domain/usercase/collection/AllCards';
-import AllVotes from './domain/usercase/collection/AllVotes';
+import AllRooms from './domain/usecase/collection/AllRooms';
+import AllUsers from './domain/usecase/collection/AllUsers';
+import AllCards from './domain/usecase/collection/AllCards';
+import AllVotes from './domain/usecase/collection/AllVotes';
 
-import GiveVote from './domain/usercase/GiveVote';
+import GiveVote from './domain/usecase/GiveVote';
 
-import EnterRoomHandler from './domain/usercase/event/EnterRoomHandler';
-import ExitRoomHandler from './domain/usercase/event/ExitRoomHandler';
-import DeleteRoomHandler from './domain/usercase/event/DeleteRoomHandler';
-import RoomChangedHandler from './domain/usercase/event/RoomChangedHandler';
+import EnterRoomHandler from './domain/usecase/event/EnterRoomHandler';
+import ExitRoomHandler from './domain/usecase/event/ExitRoomHandler';
+import DeleteRoomHandler from './domain/usecase/event/DeleteRoomHandler';
+import RoomChangedHandler from './domain/usecase/event/RoomChangedHandler';
 
 import RoomController from './infrastructure/presentation/RoomController';
 import RoomRequest from './infrastructure/presentation/dto/RoomCreationRequest';
@@ -47,7 +47,7 @@ import UserController from './infrastructure/presentation/UserController';
 
 import CardController from './infrastructure/presentation/CardController';
 import CardCreationRequest from './infrastructure/presentation/dto/CardCreationRequest';
-import CardsChangedHandler from './domain/usercase/event/CardsChangedHandler';
+import CardsChangedHandler from './domain/usecase/event/CardsChangedHandler';
 
 import VoteController from './infrastructure/presentation/VoteController';
 import VoteGivenRequest from './infrastructure/presentation/dto/VoteGivenRequest';

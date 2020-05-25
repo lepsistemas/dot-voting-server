@@ -1,4 +1,4 @@
-import AllCards from "../../domain/usercase/collection/AllCards";
+import AllCards from "../../domain/usecase/collection/AllCards";
 import Card from "../../domain/model/Card";
 
 class AllCardsInMemoryRepository implements AllCards {

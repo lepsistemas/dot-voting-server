@@ -1,6 +1,6 @@
-import EnterRoom from "../../domain/usercase/EnterRoom";
+import EnterRoom from "../../domain/usecase/EnterRoom";
 import Guest from "../../domain/model/Guest";
-import RoomEntranceData from "../../domain/usercase/dto/RoomEntranceData";
+import RoomEntranceData from "../../domain/usecase/dto/RoomEntranceData";
 
 import RequestToRoomEntranceData from "../convert/RequestToRoomEntranceData";
 import GuestToResponse from "../convert/GuestToResponse";

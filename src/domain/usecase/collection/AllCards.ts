@@ -1,4 +1,4 @@
-import Card from "../../../domain/model/Card";
+import Card from "../../model/Card";
 
 interface AllCards {
     

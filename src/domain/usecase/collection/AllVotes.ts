@@ -1,4 +1,4 @@
-import Vote from "../../../domain/model/Vote";
+import Vote from "../../model/Vote";
 
 interface AllVotes {
     

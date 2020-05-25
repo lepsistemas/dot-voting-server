@@ -2,12 +2,12 @@ import { expect } from 'chai';
 import { beforeEach } from 'mocha';
 import * as TypeMoq from 'typemoq';
 
-import FetchUser from '../../../src/domain/usercase/FetchUser';
+import FetchUser from '../../../src/domain/usecase/FetchUser';
 
 import User from '../../../src/domain/model/User';
 
-import AllUsers from '../../../src/domain/usercase/collection/AllUsers';
-import UserNotFoundException from '../../../src/domain/usercase/exception/UserNotFoundException';
+import AllUsers from '../../../src/domain/usecase/collection/AllUsers';
+import UserNotFoundException from '../../../src/domain/usecase/exception/UserNotFoundException';
 
 describe('When fetching all users', () => {
 

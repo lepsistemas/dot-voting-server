@@ -1,7 +1,7 @@
 import UserResponse from "./dto/UserResponse";
 import User from "../../domain/model/User";
 import UserToResponse from "../convert/UserToResponse";
-import FetchUser from "../../domain/usercase/FetchUser";
+import FetchUser from "../../domain/usecase/FetchUser";
 import ErrorResponse from "./dto/ErrorResponse";
 
 class UserController {

@@ -1,6 +1,6 @@
 import EventBus from './EventBus';
 import EventMessage from './EventMessage';
-import Guest from "../../../domain/model/Guest";
+import Guest from "../../model/Guest";
 
 class EnterRoomHandler {
 

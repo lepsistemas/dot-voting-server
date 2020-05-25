@@ -1,6 +1,6 @@
 import { Subject } from 'rxjs';
 import { Server } from 'socket.io';
-import EventMessage from '../../domain/usercase/event/EventMessage';
+import EventMessage from '../../domain/usecase/event/EventMessage';
 
 class EventSubscriber {
 

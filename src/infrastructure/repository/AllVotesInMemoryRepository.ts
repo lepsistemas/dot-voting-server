@@ -1,4 +1,4 @@
-import AllVotes from "../../domain/usercase/collection/AllVotes";
+import AllVotes from "../../domain/usecase/collection/AllVotes";
 import Vote from "../../domain/model/Vote";
 
 class AllVotesInMemoryRepository implements AllVotes {

@@ -1,4 +1,4 @@
-import RoomLockerData from "../../domain/usercase/dto/RoomLockerData";
+import RoomLockerData from "../../domain/usecase/dto/RoomLockerData";
 import RoomLockerRequest from "../presentation/dto/RoomLockerRequest";
 
 class RequestToRoomLockerData {

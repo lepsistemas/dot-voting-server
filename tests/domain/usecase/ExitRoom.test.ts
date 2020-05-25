@@ -5,18 +5,18 @@ import * as TypeMoq from 'typemoq';
 import Room from '../../../src/domain/model/Room';
 import User from '../../../src/domain/model/User';
 
-import ExitRoom from '../../../src/domain/usercase/ExitRoom';
-import DeleteRoom from '../../../src/domain/usercase/DeleteRoom';
+import ExitRoom from '../../../src/domain/usecase/ExitRoom';
+import DeleteRoom from '../../../src/domain/usecase/DeleteRoom';
 
-import ExitRoomHandler from '../../../src/domain/usercase/event/ExitRoomHandler';
+import ExitRoomHandler from '../../../src/domain/usecase/event/ExitRoomHandler';
 
-import AllRooms from '../../../src/domain/usercase/collection/AllRooms';
-import AllUsers from '../../../src/domain/usercase/collection/AllUsers';
+import AllRooms from '../../../src/domain/usecase/collection/AllRooms';
+import AllUsers from '../../../src/domain/usecase/collection/AllUsers';
 
-import RoomExitData from '../../../src/domain/usercase/dto/RoomExitData';
+import RoomExitData from '../../../src/domain/usecase/dto/RoomExitData';
 
-import RoomNotFoundException from '../../../src/domain/usercase/exception/RoomNotFoundException';
-import UserNotFoundException from '../../../src/domain/usercase/exception/UserNotFoundException';
+import RoomNotFoundException from '../../../src/domain/usecase/exception/RoomNotFoundException';
+import UserNotFoundException from '../../../src/domain/usecase/exception/UserNotFoundException';
 import Guest from '../../../src/domain/model/Guest';
 
 describe('When leaving a room', () => {

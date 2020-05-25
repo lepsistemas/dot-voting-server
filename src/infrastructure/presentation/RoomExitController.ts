@@ -1,10 +1,10 @@
-import ExitRoom from "../../domain/usercase/ExitRoom";
+import ExitRoom from "../../domain/usecase/ExitRoom";
 
 import ErrorResponse from "./dto/ErrorResponse";
 import GuestResponse from "./dto/GuestResponse";
 import RoomExitRequest from "./dto/RoomExitRequest";
 
-import RoomExitData from "../../domain/usercase/dto/RoomExitData";
+import RoomExitData from "../../domain/usecase/dto/RoomExitData";
 
 import RequestToRoomExitData from "../convert/RequestToRoomExitData";
 import GuestToResponse from "../convert/GuestToResponse";

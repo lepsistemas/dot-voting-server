@@ -1,6 +1,6 @@
 import { Subject } from 'rxjs';
-import EventBus from '../../domain/usercase/event/EventBus';
-import EventMessage from '../../domain/usercase/event/EventMessage';
+import EventBus from '../../domain/usecase/event/EventBus';
+import EventMessage from '../../domain/usecase/event/EventMessage';
 
 class EventPublisher<T> implements EventBus<T> {
 

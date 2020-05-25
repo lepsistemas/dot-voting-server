@@ -1,5 +1,5 @@
-import GiveVote from "../../domain/usercase/GiveVote";
-import VoteGivenData from "../../domain/usercase/dto/VoteGivenData";
+import GiveVote from "../../domain/usecase/GiveVote";
+import VoteGivenData from "../../domain/usecase/dto/VoteGivenData";
 import Vote from "../../domain/model/Vote";
 
 import VoteGivenRequest from "./dto/VoteGivenRequest";

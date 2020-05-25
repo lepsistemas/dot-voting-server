@@ -1,5 +1,5 @@
 import RoomExitRequest from "../presentation/dto/RoomExitRequest";
-import RoomExitData from "../../domain/usercase/dto/RoomExitData";
+import RoomExitData from "../../domain/usecase/dto/RoomExitData";
 
 class RequestToRoomExitData {
 

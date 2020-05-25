@@ -1,4 +1,4 @@
-import AllRooms from '../../domain/usercase/collection/AllRooms';
+import AllRooms from '../../domain/usecase/collection/AllRooms';
 import Room from '../../domain/model/Room';
 
 class AllRoomsInMemoryRepository implements AllRooms {

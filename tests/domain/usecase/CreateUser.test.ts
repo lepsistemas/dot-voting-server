@@ -2,15 +2,15 @@ import { expect } from 'chai';
 import { beforeEach } from 'mocha';
 import * as TypeMoq from 'typemoq';
 
-import CreateUser from '../../../src/domain/usercase/CreateUser';
+import CreateUser from '../../../src/domain/usecase/CreateUser';
 
-import AllUsers from '../../../src/domain/usercase/collection/AllUsers';
+import AllUsers from '../../../src/domain/usecase/collection/AllUsers';
 
-import UserData from '../../../src/domain/usercase/dto/UserData';
+import UserData from '../../../src/domain/usecase/dto/UserData';
 
 import User from '../../../src/domain/model/User';
 
-import UserAlreadyExistsException from '../../../src/domain/usercase/exception/UserAlreadyExistsException';
+import UserAlreadyExistsException from '../../../src/domain/usecase/exception/UserAlreadyExistsException';
 
 describe('When creating a user', () => {
 

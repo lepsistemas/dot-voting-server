@@ -2,16 +2,16 @@ import { expect } from 'chai';
 import { beforeEach } from 'mocha';
 import * as TypeMoq from 'typemoq';
 
-import DeleteRoom from '../../../src/domain/usercase/DeleteRoom';
+import DeleteRoom from '../../../src/domain/usecase/DeleteRoom';
 
-import DeleteRoomHandler from '../../../src/domain/usercase/event/DeleteRoomHandler';
+import DeleteRoomHandler from '../../../src/domain/usecase/event/DeleteRoomHandler';
 
-import AllRooms from '../../../src/domain/usercase/collection/AllRooms';
-import AllUsers from '../../../src/domain/usercase/collection/AllUsers';
-import AllCards from '../../../src/domain/usercase/collection/AllCards';
-import AllVotes from '../../../src/domain/usercase/collection/AllVotes';
+import AllRooms from '../../../src/domain/usecase/collection/AllRooms';
+import AllUsers from '../../../src/domain/usecase/collection/AllUsers';
+import AllCards from '../../../src/domain/usecase/collection/AllCards';
+import AllVotes from '../../../src/domain/usecase/collection/AllVotes';
 
-import RoomNotFoundException from '../../../src/domain/usercase/exception/RoomNotFoundException';
+import RoomNotFoundException from '../../../src/domain/usecase/exception/RoomNotFoundException';
 import Room from '../../../src/domain/model/Room';
 import User from '../../../src/domain/model/User';
 import Card from '../../../src/domain/model/Card';
