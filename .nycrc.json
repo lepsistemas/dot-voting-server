@@ -4,11 +4,12 @@
         "src/server.ts",
         "src/Application.ts",
         "src/WebSocket.ts",
-        "src/domain/usercase/HandlerFactory.ts",
-        "src/domain/usercase/VoteHandler.ts",
-        "src/domain/usercase/MakeVote.ts",
+        "src/domain/usecase/HandlerFactory.ts",
+        "src/domain/usecase/VoteHandler.ts",
+        "src/domain/usecase/MakeVote.ts",
         "tests/",
-        "coverage"
+        "coverage/",
+        "src/domain/usercase/"
     ],
     "check-coverage": false
 }
