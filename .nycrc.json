@@ -9,7 +9,8 @@
         "src/domain/usecase/MakeVote.ts",
         "tests/",
         "coverage/",
-        "src/domain/usercase/"
+        "src/domain/usercase/",
+        "src/domain/usecase/exception/EventHandlerNotImplementedException.ts"
     ],
     "check-coverage": false
 }
