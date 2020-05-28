@@ -1,21 +1,21 @@
 import { beforeEach } from 'mocha';
 import * as TypeMoq from 'typemoq';
 
-import CardsChangedHandler from '../../../../src/domain/usecase/event/CardsChangedHandler';
+import EnterRoomHandler from '../../../../src/domain/usecase/event/EnterRoomHandler';
 import EventMessage from '../../../../src/domain/usecase/event/EventMessage';
 import EventBus from '../../../../src/domain/usecase/event/EventBus';
 
-import Card from '../../../../src/domain/model/Card';
+import Guest from '../../../../src/domain/model/Guest';
 import Room from '../../../../src/domain/model/Room';
 
-describe('When handling with cards', () => {
+describe('When entering a room', () => {
     
-    const eventBus = TypeMoq.Mock.ofType<EventBus<Card>>();
+    const eventBus = TypeMoq.Mock.ofType<EventBus<Guest>>();
 
-    let handler: CardsChangedHandler;
+    let handler: EnterRoomHandler;
 
     beforeEach(() => {
-        handler = new CardsChangedHandler(eventBus.object);
+        handler = new EnterRoomHandler(eventBus.object);
     });
 
     it('should publish event', () => {
@@ -29,19 +29,17 @@ describe('When handling with cards', () => {
             showResults: false,
             owner: {id: 1, username: 'username'}
         }
-        const card: Card = {
-            id: 1,
-            title: 'Title',
-            description: 'Description',
-            author: null,
-            room: room,
-            votes: 0
-        }
-        handler.handle(card);
 
-        const message: EventMessage<Card> = {
-            key: 'ROOM:1_CARDS-CHANGED',
-            data: card
+        const guest: Guest = {
+            room: room,
+            user: null
+        }
+
+        handler.handle(guest);
+
+        const message: EventMessage<Guest> = {
+            key: 'ROOM:1_ROOM-CHANGED',
+            data: guest
         }
         eventBus.verify(mock => mock.publish(message), TypeMoq.Times.once());
     });
