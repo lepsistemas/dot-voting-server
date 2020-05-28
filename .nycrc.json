@@ -10,7 +10,8 @@
         "tests/",
         "coverage/",
         "src/domain/usercase/",
-        "src/domain/usecase/exception/EventHandlerNotImplementedException.ts"
+        "src/domain/usecase/exception/EventHandlerNotImplementedException.ts",
+        "src/infrastructure/convert/RoomEntranceToResponse.ts"
     ],
     "check-coverage": false
 }
