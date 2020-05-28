@@ -10,7 +10,7 @@ import EventBus from '../../../../src/domain/usecase/event/EventBus';
 import EventMessage from '../../../../src/domain/usecase/event/EventMessage';
 import Room from '../../../../src/domain/model/Room';
 
-describe('When giving a vote', () => {
+describe('When handling with cards', () => {
     
     const eventBus = TypeMoq.Mock.ofType<EventBus<Card>>();
 
