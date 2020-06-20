@@ -4,14 +4,8 @@
         "src/server.ts",
         "src/Application.ts",
         "src/WebSocket.ts",
-        "src/domain/usecase/HandlerFactory.ts",
-        "src/domain/usecase/VoteHandler.ts",
-        "src/domain/usecase/MakeVote.ts",
         "tests/",
-        "coverage/",
-        "src/domain/usercase/",
-        "src/domain/usecase/exception/EventHandlerNotImplementedException.ts",
-        "src/infrastructure/convert/RoomEntranceToResponse.ts"
+        "coverage/"
     ],
     "check-coverage": false
 }
